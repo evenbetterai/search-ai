@@ -8,8 +8,12 @@ python:
 # install dependencies
 install:
   - pip install -r requirements.txt
+  - pip install --user codecov
 
 # run tests
 script:
   - pytest
+
+# run codecov
+after_success:
   - codecov
