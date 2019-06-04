@@ -1,0 +1,15 @@
+[style]
+based_on_style = pep8
+allow_multiline_lambdas = true
+allow_multiline_dictionary_keys = true
+arithmetic_precedence_indication = true
+blank_line_before_nested_class_or_def = true
+dedent_closing_brackets = true
+disable_ending_comma_heuristic = true
+indent_dictionary_value = true
+spaces_before_comment = 4
+split_before_dict_set_generator = true
+split_before_dot = true
+split_before_first_argument = true
+split_before_logical_operator = true
+split_complex_comprehension = true
