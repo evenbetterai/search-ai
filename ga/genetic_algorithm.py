@@ -9,7 +9,7 @@ from ga.selection.selection import Selection
 
 class GeneticAlgorithm(object):
   def __init__(self, u, k, l, p, fitness, init, sel, rec, mut, 
-               replace_dup, elitism=0, stop_crit=None):
+               replace_dup=False, elitism=0, stop_crit=None):
     self._current_gen = 0
     self._population = None
     self.u = u
