@@ -5,7 +5,7 @@ from ga.individual.parameter_info.continuous_parameter_info import (
 from tests.ga.individual.test_individual import TestIndividual
 
 
-class TestContinuousIndividual(TestIndividual):
+class TestContinuousIndividual(TestIndividuals.TestIndividual):
 
     features_len = 4
     param_info_min1 = 1

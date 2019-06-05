@@ -5,7 +5,7 @@ from ga.individual.binary_individual import BinaryIndividual
 from tests.ga.individual.test_individual import TestIndividual
 
 
-class TestBinaryIndividual(TestIndividual):
+class TestBinaryIndividual(TestIndividuals.TestIndividual):
     FEATURES_LEN = 4
     BIT_ARRAY_1 = BitArray("00000")
     BIT_ARRAY_2 = BitArray("10101")
