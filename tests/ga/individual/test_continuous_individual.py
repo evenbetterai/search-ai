@@ -1,8 +1,7 @@
 from ga.individual.continuous_individual import ContinuousIndividual
-from ga.individual.parameter_info.continuous_parameter_info import (
-    ContinuousParameterInfo, )
+from ga.individual.parameter_info.continuous_parameter_info import ContinuousParameterInfo
 
-from tests.ga.individual.test_individual import TestIndividual
+from tests.ga.individual.test_individual import TestIndividuals
 
 
 class TestContinuousIndividual(TestIndividuals.TestIndividual):

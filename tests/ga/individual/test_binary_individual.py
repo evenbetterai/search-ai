@@ -2,7 +2,7 @@ from collections import Sequence
 from utils.bitarray import BitArray
 
 from ga.individual.binary_individual import BinaryIndividual
-from tests.ga.individual.test_individual import TestIndividual
+from tests.ga.individual.test_individual import TestIndividuals
 
 
 class TestBinaryIndividual(TestIndividuals.TestIndividual):
