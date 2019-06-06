@@ -2,6 +2,7 @@ from utils.test_case_with_utils import TestCaseWithUtils
 
 
 class TestIndividuals:
+
     class TestIndividual(TestCaseWithUtils):
 
         def test_individual_constructor(self):
@@ -26,7 +27,7 @@ class TestIndividuals:
 
         def test_individual_age(self):
             self.assertEqual(self.ind.age, 0)
-            
+
             self.ind.age = 2
             self.assertEqual(self.ind.age, 2)
 

@@ -6,6 +6,7 @@ from ga.individual.parameter_info.continuous_parameter_info import (
 
 
 class TestContinuousParameterInfo(unittest.TestCase):
+
     def setUp(self):
         self.cpi = ContinuousParameterInfo(-5, 5)
 

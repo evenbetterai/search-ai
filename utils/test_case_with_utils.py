@@ -3,6 +3,7 @@ import unittest
 
 
 class TestCaseWithUtils(unittest.TestCase):
+
     def cmp_arrays(self, array1, array2):
         self.assertEqual(len(array1), len(array2))
 

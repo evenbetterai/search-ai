@@ -1,6 +1,8 @@
 from bitarray import bitarray
 
+
 class BitArray(bitarray):
+
     def __str__(self):
         return self.to01()
 
