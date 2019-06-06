@@ -13,7 +13,4 @@ install:
 # run tests
 script:
   - python -m unittest
-
-# run codecov
-after_success:
   - codecov
