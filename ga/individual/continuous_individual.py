@@ -6,39 +6,32 @@ from ga.individual.individual import Individual
 class ContinuousIndividual(Individual):
 
     def __init__(self, len_features, features_info):
+        self._check_features_info_len(features_info, len_features)
+        self._features_info = features_info
         super(ContinuousIndividual, self).__init__(len_features)
-        self.features_info = features_info
+
 
     def __eq__(self, other):
         return np.array_equal(
             self.features, other.features
-        ) and np.array_equal(self.features_info, other.features_info)
+        )
 
-    def __le__(self, other):
-        return len(self.features) == len(other.features) and len(
-            self.features_info
-        ) == len(other.features_info) and np.less(
+    def __lt__(self, other):
+        return len(self.features) < len(other.features) or len(self.features) == len(other.features) and np.any(np.less(
             self.features, other.features
-        ) and np.less(self.features_info, other.features_info)
+        ))
+
+    def _check_features_info_len(self, features_info, features_len):
+        if len(features_info) != features_len:
+            raise ValueError("length of 'features_info' parameter shoulb be " + features_len)
 
     @property
     def features_info(self):
         return self._features_info
 
-    @features_info.setter
-    def features_info(self, new_features_info):
-        if len(new_features_info) != len(self._features):
-            raise ValueError(
-                "'new_features_info' parameter should " +
-                "have the same length as 'features' " + "attribute"
-            )
-
-        self._features_info = new_features_info
-        self._init_features(len(self._features_info))
-
     def set_feature_at(self, index, new_value):
-        if not (self._features[index].min_value <= new_value <=
-                self._features[index].max_value):
+        if not (self.features_info[index].min_value <= new_value <=
+                self.features_info[index].max_value):
 
             raise ValueError(
                 "'new_value' parameter has to hold a " +

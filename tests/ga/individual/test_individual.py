@@ -3,14 +3,10 @@ from utils.test_case_with_utils import TestCaseWithUtils
 
 class TestIndividuals:
     class TestIndividual(TestCaseWithUtils):
-        def __init__(self, *args, **kwargs):
-            self.ind = None
-            super().__init__(*args, **kwargs)
 
-        def check_new_individual(self, ind, features_array):
-            self.assertEqual(ind.age, 0)
-            self.cmp_arrays(ind.features, features_array)
-            self.assertEqual(ind.fitness, 0)
+        def test_individual_constructor(self):
+            self.assertEqual(self.ind.age, 0)
+            self.assertEqual(self.ind.fitness, 0)
 
         def test_individual_fitness(self):
             self.assertEqual(self.ind.fitness, 0)

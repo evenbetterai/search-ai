@@ -12,10 +12,10 @@ class ContinuousParameterInfo(object):
         self.max_value = max_value
 
     def __eq__(self, other):
-        return min_value == other.min_value and max_value == other.max_value
+        return self.min_value == other.min_value and self.max_value == other.max_value
 
     def __le__(self, other):
-        return min_value < other.min_value or min_value == other.min_value and max_value < other.max_value
+        return self.min_value < other.min_value or self.min_value == other.min_value and self.max_value < other.max_value
 
     @property
     def min_value(self):
