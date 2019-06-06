@@ -12,7 +12,7 @@ install:
 
 # run tests
 script:
-  - pytest
+  - python -m unittest
 
 # run codecov
 after_success:
