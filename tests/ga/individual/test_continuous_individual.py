@@ -55,7 +55,8 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
 
     def test_continuous_individual_features(self):
         self.cmp_arrays(
-            self.ind.features, self.init_values_continuous_params_info_array_1
+            self.ind.features,
+            self.init_values_continuous_params_info_array_1
         )
 
         self.ind.set_feature_at(0, 2)
@@ -64,11 +65,13 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
         self.ind.set_feature_at(3, 100)
         self.cmp_arrays(self.ind.features, np.array([2, 1, 1, 100]))
 
-        self.ind._features = self.init_values_continuous_params_info_array_2[1:
-                                                                             ]
+        self.ind._features = self.init_values_continuous_params_info_array_2[
+            1:]
         self.cmp_arrays(
             self.ind.features,
-            np.array(self.init_values_continuous_params_info_array_2[1:])
+            np.array(
+                self.init_values_continuous_params_info_array_2[1:]
+            )
         )
 
     def test_continuous_individual_features_exception(self):
@@ -83,8 +86,10 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
 
         self.ind.features_info[0].min_value = 1
         self.ind.features_info[2].max_value = 0
-        self.continuous_params_info_array_1[0] = ContinuousParameterInfo(1)
-        self.continuous_params_info_array_1[2] = ContinuousParameterInfo(-3, 0)
+        self.continuous_params_info_array_1[
+            0] = ContinuousParameterInfo(1)
+        self.continuous_params_info_array_1[
+            2] = ContinuousParameterInfo(-3, 0)
         self.cmp_arrays(
             self.ind.features_info, self.continuous_params_info_array_1
         )
@@ -93,7 +98,8 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
         ind2 = TestContinuousIndividual.create_continuous_ind(
             self.continuous_params_info_array_1
         )
-        self.continuous_params_info_array_1[2] = ContinuousParameterInfo(3, 8)
+        self.continuous_params_info_array_1[
+            2] = ContinuousParameterInfo(3, 8)
         ind3 = TestContinuousIndividual.create_continuous_ind(
             self.continuous_params_info_array_1
         )

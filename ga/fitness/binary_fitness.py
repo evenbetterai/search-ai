@@ -20,7 +20,9 @@ class BinaryFitness(Fitness):
             params = []
 
             for el in conv_el[0]:
-                params.append(int(ind_features[min_index:min_index + el]))
+                params.append(
+                    int(ind_features[min_index:min_index + el])
+                )
                 min_index += el
 
             fitness_el_list.append(conv_el[1](params))
@@ -32,7 +34,9 @@ class BinaryFitness(Fitness):
         new_fit_conv_list = []
 
         for conv_el in self._fitness_converter_list:
-            new_fit_conv_list.append([None for i in range(len(conv_el))])
+            new_fit_conv_list.append(
+                [None for i in range(len(conv_el))]
+            )
             new_fit_conv_list[-1][0] = []
             new_fit_conv_list[-1][1] = conv_el[1]
 

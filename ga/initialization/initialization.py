@@ -3,7 +3,9 @@ from ga.initialization.initialization_component import InitializationComponent
 
 class Initialization(object):
 
-    def __init__(self, fitness, u, init_population_size, init_leafs=tuple()):
+    def __init__(
+            self, fitness, u, init_population_size, init_leafs=tuple()
+    ):
         self.fitness = fitness
         self.u = u
         self.initialization_population_size = init_population_size
@@ -18,7 +20,8 @@ class Initialization(object):
 
             for j in range(i + 1, len_pop):
                 if population[i] == population[j]:
-                    population[i] = self._fitness.new_random_individual()
+                    population[i] = self._fitness.new_random_individual(
+                    )
                     cont = False
                     break
 

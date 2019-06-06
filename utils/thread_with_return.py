@@ -15,7 +15,9 @@ class ThreadWithReturn(Thread):
 
         return threads_list
 
-    def __init__(self, group=None, target=None, name=None, args=(), kwargs={}):
+    def __init__(
+            self, group=None, target=None, name=None, args=(), kwargs={}
+    ):
         super(ThreadWithReturn,
               self).__init__(group, target, name, args, kwargs)
 

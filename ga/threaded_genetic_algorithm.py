@@ -49,7 +49,8 @@ class ThreadedGeneticAlgorithm(GeneticAlgorithm):
             self._childs = []
             threads_list = ThreadWithReturn.create_and_start_threads(
                 self._rec_times,
-                ThreadedGeneticAlgorithm.__sel_rec_thread, lambda: (self, )
+                ThreadedGeneticAlgorithm.__sel_rec_thread, lambda:
+                (self, )
             )
 
             for thread in threads_list:

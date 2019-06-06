@@ -33,7 +33,8 @@ class Individual(ABC):
     def age(self, new_age):
         if new_age < 0:
             raise ValueError(
-                "'new_age' has to hold a " + "number greater or equal to '0'"
+                "'new_age' has to hold a " +
+                "number greater or equal to '0'"
             )
 
         self._age = new_age

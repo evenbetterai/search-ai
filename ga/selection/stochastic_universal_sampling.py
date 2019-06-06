@@ -6,7 +6,8 @@ from ga.selection.selection import Selection
 class StochasticUniversalSampling(Selection):
 
     def __init__(self, num_of_parents=2):
-        super(StochasticUniversalSampling, self).__init__(num_of_parents)
+        super(StochasticUniversalSampling,
+              self).__init__(num_of_parents)
 
     # Algorithm assumes ind.fitness >= 0 for all ind in population
     def run(self, population):

@@ -10,16 +10,18 @@ class ThreadedInitialization(Initialization):
         fitness.run(ind)
         return ind
 
-    def __init__(self, fitness, u, init_population_size, init_leafs=list()):
-        super(ThreadedInitialization,
-              self).__init__(fitness, u, init_population_size, init_leafs)
+    def __init__(
+            self, fitness, u, init_population_size, init_leafs=list()
+    ):
+        super(ThreadedInitialization, self
+              ).__init__(fitness, u, init_population_size, init_leafs)
 
     def run(self):
         population = []
         threads_list = ThreadWithReturn.create_and_start_threads(
             self._init_population_size,
-            ThreadedInitialization.create_individual_and_run_fitness, lambda:
-            (self.fitness, )
+            ThreadedInitialization.create_individual_and_run_fitness,
+            lambda: (self.fitness, )
         )
 
         for thread in threads_list:

@@ -34,12 +34,16 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
             BinaryIndividual(-1)
 
     def test_binary_individual_features(self):
-        self.cmp_arrays(self.ind.features, TestBinaryIndividual.BIT_ARRAY_1)
+        self.cmp_arrays(
+            self.ind.features, TestBinaryIndividual.BIT_ARRAY_1
+        )
 
         self.ind.set_feature_at(2, 1.2)
         self.ind.set_feature_at(0, True)
         self.ind.set_feature_at(4, 100)
-        self.cmp_arrays(self.ind.features, TestBinaryIndividual.BIT_ARRAY_2)
+        self.cmp_arrays(
+            self.ind.features, TestBinaryIndividual.BIT_ARRAY_2
+        )
 
     def test_binary_individual_comparators(self):
         ind1 = BinaryIndividual(TestBinaryIndividual.FEATURES_LEN)

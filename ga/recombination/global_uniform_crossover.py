@@ -6,7 +6,8 @@ from ga.recombination.recombination import Recombination
 class GlobalUniformCrossover(Recombination):
 
     def __init__(self, fitness, num_of_children):
-        super(GlobalUniformCrossover, self).__init__(fitness, num_of_children)
+        super(GlobalUniformCrossover,
+              self).__init__(fitness, num_of_children)
 
     def run(self, parents):
         children = []

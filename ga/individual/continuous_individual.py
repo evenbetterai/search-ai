@@ -22,7 +22,8 @@ class ContinuousIndividual(Individual):
     def _check_features_info_len(self, features_info, features_len):
         if len(features_info) != features_len:
             raise ValueError(
-                "length of 'features_info' parameter shoulb be " + features_len
+                "length of 'features_info' parameter shoulb be " +
+                features_len
             )
 
     @property
