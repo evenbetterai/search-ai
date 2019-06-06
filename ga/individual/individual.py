@@ -16,15 +16,13 @@ class Individual(ABC):
     def __init__(self, len_features):
         self._age = 0
         self._features = None
-        self._fitness = None
+        self._fitness = 0
         self._init_features(len_features)
 
     def __eq__(self, other):
-        self._is_individual(other)
         return self._features == other.features
 
     def __lt__(self, other):
-        self._is_individual(other)
         return self._features < other.features
 
     @property
@@ -33,7 +31,7 @@ class Individual(ABC):
 
     @age.setter
     def age(self, new_age):
-        if not new_age < 0:
+        if new_age < 0:
             raise ValueError(
                 "'new_age' has to hold a " + "number greater or equal to '0'"
             )
@@ -66,9 +64,3 @@ class Individual(ABC):
     @abstractmethod
     def _init_features(self, len_features):
         pass
-
-    def _is_individual(self, other):
-        if not isinstance(other, Individual):
-            raise NotImplementedError(
-                "'other parameter' has to be an 'Individual' object"
-            )

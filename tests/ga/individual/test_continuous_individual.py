@@ -1,90 +1,71 @@
+import numpy as np
+
 from ga.individual.continuous_individual import ContinuousIndividual
-from ga.individual.parameter_info.continuous_parameter_info import (
-    ContinuousParameterInfo, )
+from ga.individual.parameter_info.continuous_parameter_info import ContinuousParameterInfo
 
-from tests.ga.individual.test_individual import TestIndividual
+from tests.ga.individual.test_individual import TestIndividuals
 
 
-class TestContinuousIndividual(TestIndividual):
+class TestContinuousIndividual(TestIndividuals.TestIndividual):
 
     @staticmethod
-    def create_cont_ind():
+    def create_continuous_ind(features_info_array):
         return ContinuousIndividual(
-            4,
-            (
-                ContinuousParameterInfo(0, 5),
-                ContinuousParameterInfo(0, 1),
-                ContinuousParameterInfo(-3, 8),
-                ContinuousParameterInfo(),
-            ),
+            len(features_info_array),
+            list(features_info_array)
         )
 
     def setUp(self):
-        self.ind = TestContinuousIndividual.create_cont_ind()
+        self.continuous_params_info_array_1 = [ContinuousParameterInfo(2), ContinuousParameterInfo(0, 1), ContinuousParameterInfo(-3, 8), ContinuousParameterInfo()]
+        self.continuous_params_info_array_2 = [ContinuousParameterInfo(7, 10), ContinuousParameterInfo(5), ContinuousParameterInfo(3, 4)]
+        self.init_values_continuous_params_info_array_1 = [2, 0, -3, 0]
+        self.init_values_continuous_params_info_array_2 = [7, 5, 3]
+        self.ind = TestContinuousIndividual.create_continuous_ind(self.continuous_params_info_array_1)
 
     def test_continuous_individual_constructor(self):
+        # it is possible to create such individual
         ContinuousIndividual(0, [])
 
-        a = 1 + 3%3*3 - 5 + 4
-        print(a)
+        self.ind = TestContinuousIndividual.create_continuous_ind(self.continuous_params_info_array_2)
+        self.cmp_arrays(self.ind.features, np.array(self.init_values_continuous_params_info_array_2))
+        self.cmp_arrays(self.ind.features_info, self.continuous_params_info_array_2)
+
+    def test_continuous_individual_constructor_exception(self):
         with self.assertRaises(Exception):
             ContinuousIndividual(2, [])
-
-        with self.assertRaises(Exception):
             ContinuousIndividual(1, [1, 1])
-
-        with self.assertRaises(Exception):
             ContinuousIndividual(-1, [1, 1])
 
-    def test_continuous_individual_with_cpi(self):
-        for i in range(len(self.ind.features)):
-            self.assertTrue(self.ind.features[i],
-                            self.ind.features_info[i].min_value)
+    def test_continuous_individual_features(self):
+        self.cmp_arrays(self.ind.features, self.init_values_continuous_params_info_array_1)
 
-        with self.assertRaises(ValueError):
-            self.ind.features_info = [ContinuousParameterInfo()]
-
-        self.ind.features_info = [
-            ContinuousParameterInfo(),
-            ContinuousParameterInfo(),
-            ContinuousParameterInfo(),
-            ContinuousParameterInfo(),
-        ]
-
-        with self.assertRaises(Exception):
-            self.ind.features_info = 1
-
-    def test_binary_individual_features(self):
-        self.assertTrue(isinstance(self.ind.features, Sequence))
-        self.assertEqual(len(self.ind.features), 5)
-        self.check_individual_features(BitArray("00000"))
-
+        self.ind.set_feature_at(0, 2)
+        self.ind.set_feature_at(1, 1)
         self.ind.set_feature_at(2, 1)
-        self.ind.set_feature_at(0, True)
-        self.ind.set_feature_at(4, 100)
-        self.check_individual_features(BitArray("10101"))
+        self.ind.set_feature_at(3, 100)
+        self.cmp_arrays(self.ind.features, np.array([2, 1, 1, 100]))
 
-        self.ind._features = BitArray("0110")
-        self.check_individual_features(BitArray([0, 100, True, 0]))
+        self.ind._features = self.init_values_continuous_params_info_array_2[1:]
+        self.cmp_arrays(self.ind.features, np.array(self.init_values_continuous_params_info_array_2[1:]))
 
-    def check_individual_features(self, array):
-        self.assertEqual(len(self.ind.features), len(array))
+    def test_continuous_individual_features_exception(self):
+        with self.assertRaises(ValueError):
+            self.ind.set_feature_at(0, -100)
+            self.ind.set_feature_at(1, 1000)
 
-        for i in range(len(self.ind.features)):
-            self.assertEqual(bool(self.ind.features[i]), bool(array[i]))
+    def test_continuous_individual_features_info(self):
+        self.cmp_arrays(self.ind.features_info, self.continuous_params_info_array_1)
+
+        self.ind.features_info[0].min_value = 1
+        self.ind.features_info[2].max_value = 0
+        self.continuous_params_info_array_1[0] = ContinuousParameterInfo(1)
+        self.continuous_params_info_array_1[2] = ContinuousParameterInfo(-3, 0)
+        self.cmp_arrays(self.ind.features_info, self.continuous_params_info_array_1)
 
     def test_continuous_individual_comparators(self):
-        ind2 = TestContinuousIndividual.create_cont_ind()
-
-        ind3 = self.ind = ContinuousIndividual(
-            4,
-            (
-                ContinuousParameterInfo(3, 5),
-                ContinuousParameterInfo(0, 1),
-                ContinuousParameterInfo(3, 8),
-                ContinuousParameterInfo(),
-            ),
-        )
+        ind2 = TestContinuousIndividual.create_continuous_ind(self.continuous_params_info_array_1)
+        self.continuous_params_info_array_1[2] = ContinuousParameterInfo(3, 8)
+        ind3 = TestContinuousIndividual.create_continuous_ind(self.continuous_params_info_array_1)
 
         self.assertTrue(self.ind == ind2)
         self.assertFalse(self.ind == ind3)
