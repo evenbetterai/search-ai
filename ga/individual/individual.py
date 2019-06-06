@@ -31,7 +31,7 @@ class Individual(ABC):
 
     @age.setter
     def age(self, new_age):
-        if not new_age < 0:
+        if new_age < 0:
             raise ValueError(
                 "'new_age' has to hold a " + "number greater or equal to '0'"
             )
