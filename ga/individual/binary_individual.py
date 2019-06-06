@@ -3,6 +3,7 @@ from utils.bitarray import BitArray
 
 
 class BinaryIndividual(Individual):
+
     def __init__(self, len_features):
         super(BinaryIndividual, self).__init__(len_features)
 

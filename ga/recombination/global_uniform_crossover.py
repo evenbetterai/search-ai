@@ -2,20 +2,21 @@ import random as rd
 
 from ga.recombination.recombination import Recombination
 
+
 class GlobalUniformCrossover(Recombination):
-  def __init__(self, fitness, num_of_children):
-    super(GlobalUniformCrossover, self).__init__(fitness, 
-                                                 num_of_children)
 
-  def run(self, parents):
-    children = []
+    def __init__(self, fitness, num_of_children):
+        super(GlobalUniformCrossover, self).__init__(fitness, num_of_children)
 
-    for _ in range(self._number_of_children):
-      child = self._fitness.new_empty_individual()
+    def run(self, parents):
+        children = []
 
-      for i in range(len(child.features)):
-        child.feature[i] = rd.choice(parents).feature[i]
+        for _ in range(self._number_of_children):
+            child = self._fitness.new_empty_individual()
 
-      children.append(child)
+            for i in range(len(child.features)):
+                child.feature[i] = rd.choice(parents).feature[i]
 
-    return children
+            children.append(child)
+
+        return children

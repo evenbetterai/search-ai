@@ -18,7 +18,10 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
         self.ind = BinaryIndividual(5)
 
     def test_binary_individual_constructor(self):
-        self.cmp_arrays(self.ind.features, TestBinaryIndividual.FEATURES_LEN * BitArray("0"))
+        self.cmp_arrays(
+            self.ind.features,
+            TestBinaryIndividual.FEATURES_LEN * BitArray("0")
+        )
 
     def test_binary_individual_constructor_exception(self):
         with self.assertRaises(Exception):
