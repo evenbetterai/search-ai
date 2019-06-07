@@ -1,9 +1,9 @@
 import numpy as np
 
-from ga.individual.continuous_individual import ContinuousIndividual
-from ga.individual.parameter_info.continuous_parameter_info import ContinuousParameterInfo
+from search_ai.ga.individual.continuous_individual import ContinuousIndividual
+from search_ai.ga.individual.parameter_info.continuous_parameter_info import ContinuousParameterInfo
 
-from tests.ga.individual.test_individual import TestIndividuals
+from search_ai.tests.ga.individual.test_individual import TestIndividuals
 
 
 class TestContinuousIndividual(TestIndividuals.TestIndividual):

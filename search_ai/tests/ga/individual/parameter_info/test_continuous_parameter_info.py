@@ -1,6 +1,6 @@
 import unittest
 
-from ga.individual.parameter_info.continuous_parameter_info import (
+from search_ai.ga.individual.parameter_info.continuous_parameter_info import (
     ContinuousParameterInfo,
 )
 

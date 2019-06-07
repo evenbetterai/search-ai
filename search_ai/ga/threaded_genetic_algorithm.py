@@ -1,4 +1,4 @@
-from ga.genetic_algorithm import GeneticAlgorithm
+from search_ai.ga.genetic_algorithm import GeneticAlgorithm
 from utils.thread_with_return import ThreadWithReturn
 
 
