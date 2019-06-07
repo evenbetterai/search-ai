@@ -1,4 +1,4 @@
-from utils.test_case_with_utils import TestCaseWithUtils
+from search_ai.utils.test_case_with_utils import TestCaseWithUtils
 
 
 class TestIndividuals:

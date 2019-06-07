@@ -1,5 +1,5 @@
 from search_ai.ga.individual.individual import Individual
-from utils.bitarray import BitArray
+from search_ai.utils.bitarray import BitArray
 
 
 class BinaryIndividual(Individual):

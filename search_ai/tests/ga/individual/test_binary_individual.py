@@ -1,5 +1,5 @@
 from collections import Sequence
-from utils.bitarray import BitArray
+from search_ai.utils.bitarray import BitArray
 
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.tests.ga.individual.test_individual import TestIndividuals
