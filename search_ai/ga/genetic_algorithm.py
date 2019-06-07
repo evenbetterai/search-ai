@@ -1,11 +1,11 @@
 import math
 
-from ga.fitness.fitness import Fitness
-from ga.initialization.initialization import Initialization
-from ga.mutation.mutation import Mutation
-from ga.recombination.recombination import Recombination
-from ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
-from ga.selection.selection import Selection
+from search_ai.ga.fitness.fitness import Fitness
+from search_ai.ga.initialization.initialization import Initialization
+from search_ai.ga.mutation.mutation import Mutation
+from search_ai.ga.recombination.recombination import Recombination
+from search_ai.ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
+from search_ai.ga.selection.selection import Selection
 
 
 class GeneticAlgorithm(object):

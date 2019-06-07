@@ -1,6 +1,6 @@
 import random as rd
 
-from ga.mutation.mutation import Mutation
+from search_ai.ga.mutation.mutation import Mutation
 
 
 class StandardBinaryMutation(Mutation):

@@ -1,4 +1,4 @@
-from ga.initialization.initialization_component import InitializationComponent
+from search_ai.ga.initialization.initialization_component import InitializationComponent
 
 
 class Initialization(object):

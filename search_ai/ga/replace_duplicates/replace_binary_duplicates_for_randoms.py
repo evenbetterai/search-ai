@@ -1,6 +1,6 @@
 import random as rd
 
-from ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
+from search_ai.ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
 
 
 class ReplaceBinaryDuplicatesForRandoms(ReplaceDuplicates):

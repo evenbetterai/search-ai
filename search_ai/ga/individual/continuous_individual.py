@@ -1,6 +1,6 @@
 import numpy as np
 
-from ga.individual.individual import Individual
+from search_ai.ga.individual.individual import Individual
 
 
 class ContinuousIndividual(Individual):

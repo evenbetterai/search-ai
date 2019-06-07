@@ -1,8 +1,8 @@
 import math
 import random as rd
 
-from ga.fitness.fitness import Fitness
-from ga.individual.binary_individual import BinaryIndividual
+from search_ai.ga.fitness.fitness import Fitness
+from search_ai.ga.individual.binary_individual import BinaryIndividual
 
 
 class BinaryFitness(Fitness):

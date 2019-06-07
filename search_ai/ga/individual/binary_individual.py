@@ -1,4 +1,4 @@
-from ga.individual.individual import Individual
+from search_ai.ga.individual.individual import Individual
 from utils.bitarray import BitArray
 
 

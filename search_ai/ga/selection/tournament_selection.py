@@ -1,6 +1,6 @@
 import random as rd
 
-from ga.selection.selection import Selection
+from search_ai.ga.selection.selection import Selection
 
 
 class TournamentSelection(Selection):

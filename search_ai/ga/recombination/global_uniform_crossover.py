@@ -1,6 +1,6 @@
 import random as rd
 
-from ga.recombination.recombination import Recombination
+from search_ai.ga.recombination.recombination import Recombination
 
 
 class GlobalUniformCrossover(Recombination):

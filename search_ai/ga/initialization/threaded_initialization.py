@@ -1,4 +1,4 @@
-from ga.initialization.initialization import Initialization
+from search_ai.ga.initialization.initialization import Initialization
 from utils.thread_with_return import ThreadWithReturn
 
 

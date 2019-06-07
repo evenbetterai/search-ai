@@ -1,8 +1,8 @@
 # import unittest
 
-# from ga.initialization.initialization import Initializarion
-# from ga.fitness.binary_fitness_example import BinaryFitnessExample
-# from ga.fitness.continuous_fitness_example import ContinuousFitnessExample
+# from search_ai.ga.initialization.initialization import Initializarion
+# from search_ai.ga.fitness.binary_fitness_example import BinaryFitnessExample
+# from search_ai.ga.fitness.continuous_fitness_example import ContinuousFitnessExample
 
 # class TestInitialization(unittest.TestCase):
 # 	def setUp(self):
