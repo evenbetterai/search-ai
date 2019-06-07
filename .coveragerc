@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = ga
+source = search_ai
 
 [report]
 exclude_lines =

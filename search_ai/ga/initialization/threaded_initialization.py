@@ -1,5 +1,5 @@
 from search_ai.ga.initialization.initialization import Initialization
-from utils.thread_with_return import ThreadWithReturn
+from search_ai.utils.thread_with_return import ThreadWithReturn
 
 
 class ThreadedInitialization(Initialization):

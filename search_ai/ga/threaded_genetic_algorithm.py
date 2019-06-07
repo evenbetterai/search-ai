@@ -1,5 +1,5 @@
 from search_ai.ga.genetic_algorithm import GeneticAlgorithm
-from utils.thread_with_return import ThreadWithReturn
+from search_ai.utils.thread_with_return import ThreadWithReturn
 
 
 class ThreadedGeneticAlgorithm(GeneticAlgorithm):
