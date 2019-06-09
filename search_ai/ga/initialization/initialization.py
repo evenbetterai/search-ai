@@ -4,12 +4,12 @@ from search_ai.ga.initialization.initialization_component import InitializationC
 class Initialization(object):
 
     def __init__(
-            self, fitness, u, init_population_size, init_leafs=tuple()
+            self, u, fitness, init_population_size=u, init_components=tuple()
     ):
-        self.fitness = fitness
         self.u = u
-        self.initialization_population_size = init_population_size
-        self.initialization_leafs = init_leafs
+        self.fitness = fitness
+        self.init_population_size = init_population_size
+        self.initialization_components = init_components
 
     def check_repeated_ind(self, population):
         i = 0
@@ -31,12 +31,12 @@ class Initialization(object):
         return population
 
     @property
-    def initialization_leafs(self):
-        return self._initialization_leafs
+    def initialization_components(self):
+        return self._initialization_components
 
-    @initialization_leafs.setter
-    def initialization_leafs(self, new_init_leafs_list):
-        self._initialization_leafs = new_init_leafs_list
+    @initialization_components.setter
+    def initialization_components(self, new_init_components_list):
+        self._initialization_components = new_init_components_list
 
     @property
     def init_population_size(self):
@@ -69,8 +69,8 @@ class Initialization(object):
 
         population = self.check_repeated_ind(population)
 
-        for leaf in self._initialization_leafs:
-            leaf.run(population)
+        for component in self._initialization_components:
+            component.run(population)
 
         return population.sort(key=lambda ind: ind.fitness)[0:self._u]
 
