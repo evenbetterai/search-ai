@@ -17,6 +17,10 @@ class Individual(ABC):
         self._age = 0
         self._features = None
         self._fitness = 0
+
+        if len_features < 0:
+            raise ValueError("'len_features' should be greater or equal to '0'")
+
         self._init_features(len_features)
 
     def __eq__(self, other):

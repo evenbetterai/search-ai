@@ -30,7 +30,7 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
         with self.assertRaises(Exception):
             BinaryIndividual([])
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             BinaryIndividual(-1)
 
     def test_binary_individual_features(self):
