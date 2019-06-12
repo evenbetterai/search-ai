@@ -4,8 +4,9 @@ from search_ai.ga.initialization.initialization_component import InitializationC
 class Initialization(object):
 
     def __init__(
-            self, u, fitness, init_population_size=u, init_components=tuple()
+            self, u, fitness, init_population_size, init_components=tuple()
     ):
+        self._init_population_size = init_population_size
         self.u = u
         self.fitness = fitness
         self.init_population_size = init_population_size
@@ -72,7 +73,7 @@ class Initialization(object):
         for component in self._initialization_components:
             component.run(population)
 
-        return population.sort(key=lambda ind: ind.fitness)[0:self._u]
+        return sorted(population, key=lambda ind: ind.fitness, reverse=True)[0:self._u]
 
     @property
     def u(self):
