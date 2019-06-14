@@ -10,15 +10,6 @@ class ContinuousIndividual(Individual):
         self._features_info = features_info
         super(ContinuousIndividual, self).__init__(len_features)
 
-    def __eq__(self, other):
-        return np.array_equal(self.features, other.features)
-
-    def __lt__(self, other):
-        return len(self.features) < len(other.features) or len(
-            self.features
-        ) == len(other.features
-                 ) and np.any(np.less(self.features, other.features))
-
     def _check_features_info_len(self, features_info, features_len):
         if len(features_info) != features_len:
             raise ValueError(

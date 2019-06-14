@@ -48,15 +48,12 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
     def test_binary_individual_comparators(self):
         ind1 = BinaryIndividual(TestBinaryIndividual.FEATURES_LEN)
         ind2 = BinaryIndividual(TestBinaryIndividual.FEATURES_LEN)
-        ind1._features = BitArray("01000")
-        ind2._features = BitArray("01100")
-        self.ind.features[1] = 1
+        ind3 = BinaryIndividual(TestBinaryIndividual.FEATURES_LEN)
+        ind1.fitness = 0
+        ind2.fitness = 0.1
+        ind3.fitness = 0.89
 
-        self.assertEqual(self.ind, ind1)
-        self.assertNotEqual(self.ind, ind2)
-        self.assertTrue(self.ind <= ind2)
-        self.assertTrue(self.ind <= ind1)
-        self.assertTrue(ind2 > ind1)
+        self.check_individual_comparators(ind1, ind2, ind3)
 
     def cmp_array_els(self, el1, el2):
         self.assertEqual(bool(el1), bool(el2))

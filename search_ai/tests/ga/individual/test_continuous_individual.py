@@ -95,16 +95,18 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
         )
 
     def test_continuous_individual_comparators(self):
+        ind1 = TestContinuousIndividual.create_continuous_ind(
+            self.continuous_params_info_array_1
+        )
         ind2 = TestContinuousIndividual.create_continuous_ind(
             self.continuous_params_info_array_1
         )
-        self.continuous_params_info_array_1[
-            2] = ContinuousParameterInfo(3, 8)
         ind3 = TestContinuousIndividual.create_continuous_ind(
             self.continuous_params_info_array_1
         )
 
-        self.assertTrue(self.ind == ind2)
-        self.assertFalse(self.ind == ind3)
-        self.assertTrue(self.ind <= ind3)
-        self.assertTrue(ind3 > ind2)
+        ind1.fitness = 0.1
+        ind2.fitness = 0.11
+        ind3.fitness = 0.12
+
+        self.check_individual_comparators(ind1, ind2, ind3)

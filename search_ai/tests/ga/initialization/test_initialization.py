@@ -7,20 +7,33 @@ from search_ai.ga.initialization.initialization import Initialization
 from search_ai.ga.initialization.initialization_component import InitializationComponent
 from search_ai.utils.test_case_with_utils import TestCaseWithUtils
 
+
 class TestInitialization(TestCaseWithUtils):
 
     def create_fitness_mock(self, population):
         self.fitness = MagicMock()
-        self.fitness.new_random_individual.side_effect = list(population)
+        self.fitness.new_random_individual.side_effect = list(
+            population
+        )
         self.fitness.run.return_value = None
 
-    def create_init_components_mock(self, u, init_population_size, population):
+    def create_init_components_mock(
+            self, u, init_population_size, population
+    ):
         self.n_init_components = 1
         self.init_component = MagicMock()
-        self.init_component.run.return_value = list(population[0:init_population_size // 2] * 2)
-        self.best_individuals_with_init_component = list(population[init_population_size - u : init_population_size + u])[::-1]
+        self.init_component.run.return_value = list(
+            [population[0]] * (init_population_size//2) +
+            population[0:init_population_size // 2]
+        )
+        self.best_individuals_with_init_component = list(
+            population[init_population_size//2 -
+                       u:init_population_size // 2]
+        )[::-1]
 
-    def create_n_individuals(self, n, individual_class=BinaryIndividual):
+    def create_n_individuals(
+            self, n, individual_class=BinaryIndividual
+    ):
         individuals = [individual_class(n) for _ in range(n)]
 
         for i in range(n):
@@ -29,32 +42,46 @@ class TestInitialization(TestCaseWithUtils):
 
         return individuals
 
-    def check_initialization_after_creattion(self, init, u, init_population_size, n_init_components):
+    def check_initialization_after_creattion(
+            self, init, u, init_population_size, n_init_components
+    ):
         self.assertEqual(init.u, u)
-        self.assertEqual(init.init_population_size, init_population_size)
+        self.assertEqual(
+            init.init_population_size, init_population_size
+        )
 
         self.check_fitness_interface(init.fitness)
 
-        self.assertEqual(len(init.initialization_components), n_init_components)
+        self.assertEqual(
+            len(init.initialization_components), n_init_components
+        )
 
-        self.check_initialization_components_interface(init.initialization_components)
+        self.check_initialization_components_interface(
+            init.initialization_components
+        )
 
     def check_fitness_interface(self, fitness):
         self.assertTrue(hasattr(fitness, "new_random_individual"))
         self.assertTrue(hasattr(fitness, "run"))
 
-    def check_initialization_components_interface(self, init_components):
+    def check_initialization_components_interface(
+            self, init_components
+    ):
         for init_component in init_components:
             self.assertTrue(hasattr(init_component, "run"))
 
     def check_fitness_behaviour(self, fitness, individuals):
-        self.assertEqual(fitness.new_random_individual.call_count, len(individuals))
+        self.assertEqual(
+            fitness.new_random_individual.call_count, len(individuals)
+        )
         self.assertEqual(fitness.run.call_count, len(individuals))
 
         for individual in individuals:
             fitness.run.assert_any_call(individual)
-            
-    def check_initialization_components_behaviour(self, init_components):
+
+    def check_initialization_components_behaviour(
+            self, init_components
+    ):
         for init_component in init_components:
             self.assertEqual(init_component.run.call_count, 1)
             init_component.run.assert_called_with(self.population)
@@ -62,16 +89,28 @@ class TestInitialization(TestCaseWithUtils):
     def setUp(self):
         self.u = 10
         self.init_population_size = 50
-        self.population = self.create_n_individuals(self.init_population_size)
-        self.best_individuals = list(self.population[self.init_population_size - self.u:])[::-1]
+        self.population = self.create_n_individuals(
+            self.init_population_size
+        )
+        self.best_individuals = list(
+            self.population[self.init_population_size - self.u:]
+        )[::-1]
 
         self.create_fitness_mock(self.population)
-        self.create_init_components_mock(self.u, self.init_population_size, self.population)
+        self.create_init_components_mock(
+            self.u, self.init_population_size, self.population
+        )
 
-        self.init = Initialization(self.u, self.fitness, self.init_population_size, (self.init_component, ))
+        self.init = Initialization(
+            self.u, self.fitness, self.init_population_size,
+            (self.init_component, )
+        )
 
     def test_initialization_constructor(self):
-        self.check_initialization_after_creattion(self.init, self.u, self.init_population_size, self.n_init_components)
+        self.check_initialization_after_creattion(
+            self.init, self.u, self.init_population_size,
+            self.n_init_components
+        )
 
         u = 2
         other_init = Initialization(u, self.fitness, u)
@@ -100,8 +139,10 @@ class TestInitialization(TestCaseWithUtils):
             self.init.u = self.init.init_population_size + 1
 
     def test_initialization_init_population_size(self):
-        self.assertEqual(self.init.init_population_size, self.init_population_size)
-        
+        self.assertEqual(
+            self.init.init_population_size, self.init_population_size
+        )
+
         self.init.init_population_size = self.u
         self.assertEqual(self.init.init_population_size, self.u)
 
@@ -118,13 +159,19 @@ class TestInitialization(TestCaseWithUtils):
         self.check_fitness_interface(self.init.fitness)
 
     def test_initialization_init_components(self):
-        self.check_initialization_components_interface(self.init.initialization_components)
+        self.check_initialization_components_interface(
+            self.init.initialization_components
+        )
 
     def test_initialization_run(self):
         population = self.init.run()
-        self.cmp_arrays(population, self.best_individuals_with_init_component)
+        self.cmp_arrays(
+            population, self.best_individuals_with_init_component
+        )
         self.check_fitness_behaviour(self.init.fitness, self.population)
-        self.check_initialization_components_behaviour(self.init.initialization_components)
+        self.check_initialization_components_behaviour(
+            self.init.initialization_components
+        )
 
         self.init.initialization_components = ()
         self.create_fitness_mock(self.population)
@@ -132,6 +179,7 @@ class TestInitialization(TestCaseWithUtils):
         population = self.init.run()
         self.cmp_arrays(population, self.best_individuals)
         self.check_fitness_behaviour(self.init.fitness, self.population)
+        self.assertEqual(self.init_component.call_count, 0)
 
     def test_initialization_run_exception(self):
         self.init.fitness = object()
