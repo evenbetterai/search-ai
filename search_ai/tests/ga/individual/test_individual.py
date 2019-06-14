@@ -37,3 +37,18 @@ class TestIndividuals:
         def test_individual_age_exception(self):
             with self.assertRaises(ValueError):
                 self.ind.age = -1
+
+        def check_individual_comparators(
+                self, low_individual, middle_individual, high_individual
+        ):
+            self.assertNotEqual(low_individual, middle_individual)
+            self.assertTrue(middle_individual < high_individual)
+            self.assertTrue(middle_individual >= low_individual)
+            self.assertTrue(high_individual > low_individual)
+
+            low_individual.fitness = middle_individual.fitness
+            self.assertEqual(
+                low_individual.fitness, middle_individual.fitness
+            )
+            middle_individual.fitness = high_individual.fitness
+            self.assertTrue(middle_individual >= high_individual)
