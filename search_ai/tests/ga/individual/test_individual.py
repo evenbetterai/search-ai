@@ -1,7 +1,7 @@
 from search_ai.utils.test_case_with_utils import TestCaseWithUtils
 
 
-class TestIndividuals:
+class TestIndividuals(object):
 
     class TestIndividual(TestCaseWithUtils):
 
