@@ -17,7 +17,7 @@ class Fitness(ABC):
         pass
 
     @abstractmethod
-    def new_empty_individual(self):
+    def new_blank_individual(self):
         pass
 
     @abstractmethod

@@ -13,11 +13,11 @@ class GlobalUniformCrossover(Recombination):
         children = []
 
         for _ in range(self._number_of_children):
-            child = self._fitness.new_empty_individual()
+            child = self._fitness.new_blank_individual()
 
             for i in range(len(child.features)):
-                child.feature[i] = rd.choice(parents).feature[i]
+                child.features[i] = rd.choice(parents).features[i]
 
-            children.append(child)
+            children += [child]
 
         return children
