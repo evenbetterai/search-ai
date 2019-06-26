@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, Mock
+from unittest.mock import MagicMock
 
 from search_ai.ga.fitness.fitness import Fitness
 from search_ai.ga.individual.binary_individual import BinaryIndividual

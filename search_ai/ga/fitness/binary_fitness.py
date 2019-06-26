@@ -49,11 +49,11 @@ class BinaryFitness(Fitness):
 
         self._fitness_converter_list = new_fit_conv_list
 
-    def new_empty_individual(self):
+    def new_blank_individual(self):
         return BinaryIndividual(self._len_features)
 
     def new_random_individual(self):
-        ind = self.new_empty_individual()
+        ind = self.new_blank_individual()
 
         for i in range(len(ind.features)):
             ind.features[i] = rd.randint(0, 1)
