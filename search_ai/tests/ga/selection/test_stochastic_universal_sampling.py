@@ -1,7 +1,7 @@
 from search_ai.ga.selection.stochastic_universal_sampling import StochasticUniversalSampling
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 
-from search_ai.tests.ga.selection.test_selection import TestSelection
+from search_ai.tests.ga.selection.test_selection import TestSelections
 
 
 class TestStochasticUniversalSampling(TestSelections.TestSelection):
@@ -47,20 +47,20 @@ class TestStochasticUniversalSampling(TestSelections.TestSelection):
 
         self.selection.number_of_parents = 10
         pop = self.selection.run(self.fiveIndividuals)
-        self.check_at_least_reference(pop, self.fiveIndividuals[0], 8)
+        self.check_at_least_reference(pop, self.fiveIndividuals[0], 7)
 
 
     def check_len_array_and_reference(self, returned, expected, expected_len):
-        self.assertEquals(len(returned), expected_len)
+        self.assertEqual(len(returned), expected_len)
 
         for i in range(expected_len):
-            self.assertTrue(returned[i] is expected[i])
+            self.assertIs(returned[i], expected[i])
 
     def check_at_least_reference(self, returned, expected, min_times):
         n_times = 0
         for ind in returned:
-            if returned is expected:
+            if ind is expected:
                 n_times += 1
 
-        self.assertTrue(n_times >= min_times)
+        self.assertGreaterEqual(n_times, min_times)
 

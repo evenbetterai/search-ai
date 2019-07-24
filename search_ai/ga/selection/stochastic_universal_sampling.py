@@ -18,7 +18,7 @@ class StochasticUniversalSampling(Selection):
         fitness_step = self._sum_of_population_fitness(population) / self._number_of_parents
         random_value = rd.uniform(0, fitness_step)
 
-        for _ in range(self._number_of_parents):
+        while len(parents) < self._number_of_parents:
             fitness_aux += population[i].fitness
             random_value = self._add_chosen_individual(parents, population[i], fitness_step, fitness_aux, random_value)
             i = (i + 1) % len(population)
@@ -35,7 +35,7 @@ class StochasticUniversalSampling(Selection):
 
     def _add_chosen_individual(self, parents, individual, fitness_step, fitness_aux, random_value):
         while fitness_aux > random_value:
-            parents += individual
+            parents.append(individual)
             random_value += fitness_step
 
         return random_value
