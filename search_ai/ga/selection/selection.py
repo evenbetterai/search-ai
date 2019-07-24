@@ -6,7 +6,7 @@ class Selection(ABC):
     MIN_NUMBER_OF_PARENTS = 2
 
     def __init__(self, number_of_parents):
-        self._number_of_parents = number_of_parents
+        self.number_of_parents = number_of_parents
 
     @property
     def number_of_parents(self):
