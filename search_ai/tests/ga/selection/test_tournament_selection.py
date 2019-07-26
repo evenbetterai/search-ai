@@ -29,39 +29,16 @@ class TestStochasticUniversalSampling(TestSelections.TestSelection):
         self.selection.tournament_size = 1
         self.selection.number_of_parents = 2
         pop = self.selection.run(self.one_individual)
-        self.check_len_array_and_reference(pop, [self.one_individual[0] for _ in range(self.selection.number_of_parents)])
+        self.cmp_arrays(pop, [self.one_individual[0] for _ in range(self.selection.number_of_parents)], self.el1_is_el2)
 
         self.selection.tournament_size = 2
         self.selection.number_of_parents = 4
         self.two_individuals[1].fitness = 0.1
         pop = self.selection.run(self.two_individuals)
-        self.check_len_array_and_reference(pop, [self.two_individuals[0] for _ in range(self.selection.number_of_parents)])
+        self.cmp_arrays(pop, [self.two_individuals[0] for _ in range(self.selection.number_of_parents)], self.el1_is_el2)
 
         self.selection.tournament_size = 4
         self.selection.number_of_parents = 10
         self.five_individuals[4].fitness = 0.001
         pop = self.selection.run(self.five_individuals)
-        self.check_reference_at_most_n_times(pop, self.five_individuals[4], 0)
-
-    def check_len_array_and_reference(self, returned, expected):
-        self.assertEqual(len(returned), len(expected))
-
-        for i in range(len(expected)):
-            self.assertIs(returned[i], expected[i])
-
-    def check_reference_at_least_n_times(self, returned, expected, min_times):
-        n_times = 0
-        for ind in returned:
-            if ind is expected:
-                n_times += 1
-
-        self.assertGreaterEqual(n_times, min_times)
-
-    def check_reference_at_most_n_times(self, returned, expected, max_times):
-        n_times = 0
-        for ind in returned:
-            if ind is expected:
-                n_times += 1
-
-        self.assertLessEqual(n_times, max_times)
-
+        self.assertLessEqual(self.el_in_array(pop, self.five_individuals[4], self.el1_is_el2), 0)

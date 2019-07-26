@@ -5,7 +5,7 @@ from search_ai.ga.fitness.fitness import Fitness
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.ga.initialization.initialization import Initialization
 from search_ai.ga.initialization.initialization_component import InitializationComponent
-from search_ai.utils.test_case_with_utils import TestCaseWithUtils
+from search_ai.tests.test_case_with_utils import TestCaseWithUtils
 
 
 class TestInitialization(TestCaseWithUtils):
