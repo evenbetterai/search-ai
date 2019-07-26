@@ -1,11 +1,11 @@
-import unittest
-
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.ga.selection.selection import Selection
 
+from search_ai.tests.test_case_with_utils import TestCaseWithUtils
+
 
 class TestSelections(object):
-    class TestSelection(unittest.TestCase):
+    class TestSelection(TestCaseWithUtils):
         def setUp(self):
             self.min_number_of_parents = 2
             self.number_of_parents = 3
@@ -41,3 +41,6 @@ class TestSelections(object):
             with self.assertRaises(ValueError):
                 self.selection.number_of_parents = 1
                 self.selection.number_of_parents = -10
+
+        def el1_is_el2(self, el1, el2):
+            return el1 is el2

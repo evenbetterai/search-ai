@@ -20,7 +20,8 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
     def test_binary_individual_constructor(self):
         self.cmp_arrays(
             self.ind.features,
-            TestBinaryIndividual.FEATURES_LEN * BitArray("0")
+            TestBinaryIndividual.FEATURES_LEN * BitArray("0"),
+            self.cmp_array_els
         )
 
     def test_binary_individual_constructor_exception(self):
@@ -35,14 +36,14 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
 
     def test_binary_individual_features(self):
         self.cmp_arrays(
-            self.ind.features, TestBinaryIndividual.BIT_ARRAY_1
+            self.ind.features, TestBinaryIndividual.BIT_ARRAY_1, self.cmp_array_els
         )
 
         self.ind.set_feature_at(2, 1.2)
         self.ind.set_feature_at(0, True)
         self.ind.set_feature_at(4, 100)
         self.cmp_arrays(
-            self.ind.features, TestBinaryIndividual.BIT_ARRAY_2
+            self.ind.features, TestBinaryIndividual.BIT_ARRAY_2, self.cmp_array_els
         )
 
     def test_binary_individual_comparators(self):
@@ -56,4 +57,4 @@ class TestBinaryIndividual(TestIndividuals.TestIndividual):
         self.check_individual_comparators(ind1, ind2, ind3)
 
     def cmp_array_els(self, el1, el2):
-        self.assertEqual(bool(el1), bool(el2))
+        return bool(el1) == bool(el2)

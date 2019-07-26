@@ -24,27 +24,12 @@ class TestStochasticUniversalSampling(TestSelections.TestSelection):
 
     def test_stochastic_universal_sampling_run(self):
         pop = self.selection.run(self.one_individual)
-        self.check_len_array_and_reference(pop, [self.one_individual[0] for _ in range(3)])
+        self.cmp_arrays(pop, [self.one_individual[0] for _ in range(3)], self.el1_is_el2)
 
         pop = self.selection.run(self.two_individuals)
-        self.check_reference_at_least_n_times(pop, self.two_individuals[0], 1)
-        self.check_reference_at_least_n_times(pop, self.two_individuals[1], 1)
+        self.assertGreaterEqual(self.el_in_array(pop, self.two_individuals[0]), 1)
+        self.assertGreaterEqual(self.el_in_array(pop, self.two_individuals[1]), 1)
 
         self.selection.number_of_parents = 10
         pop = self.selection.run(self.five_individuals)
-        self.check_reference_at_least_n_times(pop, self.five_individuals[0], 7)
-
-    def check_len_array_and_reference(self, returned, expected):
-        self.assertEqual(len(returned), len(expected))
-
-        for i in range(len(expected)):
-            self.assertIs(returned[i], expected[i])
-
-    def check_reference_at_least_n_times(self, returned, expected, min_times):
-        n_times = 0
-        for ind in returned:
-            if ind is expected:
-                n_times += 1
-
-        self.assertGreaterEqual(n_times, min_times)
-
+        self.assertGreaterEqual(self.el_in_array(pop, self.five_individuals[0]), 7)
