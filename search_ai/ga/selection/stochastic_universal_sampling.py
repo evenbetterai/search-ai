@@ -11,27 +11,31 @@ class StochasticUniversalSampling(Selection):
 
     # Algorithm assumes ind.fitness >= 0 for all ind in population
     def run(self, population):
-        if len(population) == self._number_of_parents:
-            return list(population)
-
         parents = []
-        total_fitness = 0
         fitness_aux = 0
-        i = 0
+        i = rd.randint(0, len(population) - 1)
 
-        for parent in population:
-            total_fitness += parent.fitness
-
-        fitness_step = total_fitness / self._number_of_parents
+        fitness_step = self._sum_of_population_fitness(population) / self._number_of_parents
         random_value = rd.uniform(0, fitness_step)
 
-        for _ in range(self._number_of_parents):
+        while len(parents) < self._number_of_parents:
             fitness_aux += population[i].fitness
-
-            while fitness_aux > random_value:
-                parents.append(population[i])
-                random_value += fitness_step
-
-            i += 1
+            random_value = self._add_chosen_individual(parents, population[i], fitness_step, fitness_aux, random_value)
+            i = (i + 1) % len(population)
 
         return parents
+
+    def _sum_of_population_fitness(self, population):
+        s = 0
+
+        for individual in population:
+            s += individual.fitness
+
+        return s
+
+    def _add_chosen_individual(self, parents, individual, fitness_step, fitness_aux, random_value):
+        while fitness_aux > random_value:
+            parents.append(individual)
+            random_value += fitness_step
+
+        return random_value
