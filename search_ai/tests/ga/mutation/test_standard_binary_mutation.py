@@ -10,7 +10,7 @@ class TestStandardBinaryMutation(TestMutations.TestMutation):
         self.mutation_prob = 0.2
         self.mutation = StandardBinaryMutation(self.mutation_prob)
         self.individual = MagicMock()
-        self.individual.features = BitArray("01000")
+        self.individual.features = [False, True, False, False, False]
 
 
     def test_mutation_mutate(self):
@@ -21,3 +21,20 @@ class TestStandardBinaryMutation(TestMutations.TestMutation):
         feature_before_mutation = self.individual.features[1]
         self.mutation.mutate(self.individual, 1)
         self.assertEqual(self.individual.features[1], not feature_before_mutation)
+
+    def test_mutation_run(self):
+        self.mutation.mutation_prob = 0
+        features_before_mutation = list(self.individual.features)
+        self.mutation.run(self.individual)
+        self.cmp_arrays(self.individual.features, features_before_mutation)
+
+        self.mutation.mutation_prob = 1
+        features_before_mutation = [not feature for feature in self.individual.features]
+        self.mutation.run(self.individual)
+        self.cmp_arrays(self.individual.features, features_before_mutation)
+
+        self.mutation.mutation_prob = 0.3
+        self.mutation.run(self.individual)
+
+        for feature in self.individual.features:
+            self.assertTrue(feature == 0 or feature == 1)
