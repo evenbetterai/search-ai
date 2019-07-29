@@ -1,28 +1,18 @@
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.ga.selection.selection import Selection
 
-from search_ai.tests.test_case_with_utils import TestCaseWithUtils
+from search_ai.tests.ga.test_case_with_population import TestCaseWithPopulation
 
 
 class TestSelections(object):
-    class TestSelection(TestCaseWithUtils):
+    class TestSelection(TestCaseWithPopulation):
         def setUp(self):
             self.min_number_of_parents = 2
             self.number_of_parents = 3
 
-            self.one_individual = [BinaryIndividual(5) for _ in range(1)]
-            self.one_individual[0].fitness = 1
-
-            self.two_individuals = [BinaryIndividual(5) for _ in range(2)]
-            self.two_individuals[0].fitness = 1
-            self.two_individuals[1].fitness = 1
-
-            self.five_individuals = [BinaryIndividual(5) for _ in range(5)]
-            self.five_individuals[0].fitness = 1
-            self.five_individuals[1].fitness = 0.1
-            self.five_individuals[2].fitness = 0.1
-            self.five_individuals[3].fitness = 0.1
-            self.five_individuals[4].fitness = 0.1
+            self.one_individual = self.create_population(1, None, None, [1])
+            self.two_individuals = self.create_population(2, None, None, [1, 1])
+            self.five_individuals = self.create_population(5, None, None, [1, 0.1, 0.1, 0.1, 0.1])
 
         def check_selection_attributes(self):
             self.assertEqual(self.selection.number_of_parents, self.number_of_parents)

@@ -11,8 +11,8 @@ class TestCaseWithPopulation(TestCaseWithUtils):
         population = []
         for i in range(n):
             ind = ind_mock()
-            ind.features.return_value = features[i]
-            ind.fitness.return_value = fitness[i]
+            ind.features = features[i]
+            ind.fitness = fitness[i]
             population.append(ind)
 
         return population
@@ -31,7 +31,8 @@ class TestCaseWithPopulation(TestCaseWithUtils):
         
     def default_ind_mock(self):
         mock = MagicMock()
-        mock.__lt__.return_value = True
+        mock.__lt__ = lambda self, other: self.fitness < other.fitness
+        mock.__eq__ = lambda self, other: self.fitness == other.fitness
         return mock
 
     def default_features(self, n):
