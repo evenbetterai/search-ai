@@ -3,18 +3,21 @@ from abc import ABC, abstractmethod
 
 class Fitness(ABC):
 
-    def __init__(self, fitness_converter_list, run_params_dict):
-        self._fitness_converter_list = fitness_converter_list
-        self._run_params_dict = run_params_dict
-        self.fitness_els_to_features()
+    MIN_FEATURES = 1
 
-    @abstractmethod
-    def features_to_fitness_els(self, individual):
-        pass
+    def __init__(self, len_features):
+        self.len_features = len_features
 
-    @abstractmethod
-    def fitness_els_to_features(self):
-        pass
+    @property
+    def len_features(self):
+        return self._len_features
+
+    @len_features.setter
+    def len_features(self, len_features):
+        if len_features < Fitness.MIN_FEATURES:
+            raise ValueError('\'len_features\' should not be less or equal to \'' + Fitness.MIN_FEATURES + '\'')
+
+        self._len_features = len_features
 
     @abstractmethod
     def new_blank_individual(self):
