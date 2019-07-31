@@ -15,7 +15,7 @@ class Fitness(ABC):
     @len_features.setter
     def len_features(self, len_features):
         if len_features < Fitness.MIN_FEATURES:
-            raise ValueError('\'len_features\' should not be less or equal to \'' + Fitness.MIN_FEATURES + '\'')
+            raise ValueError('\'len_features\' should not be less or equal to \'' + str(Fitness.MIN_FEATURES) + '\'')
 
         self._len_features = len_features
 

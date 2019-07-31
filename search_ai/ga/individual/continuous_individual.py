@@ -7,7 +7,7 @@ class ContinuousIndividual(Individual):
 
     def __init__(self, len_features, features_info):
         self._check_features_info_len(features_info, len_features)
-        self._features_info = features_info
+        self._features_info = list(features_info)
         super(ContinuousIndividual, self).__init__(len_features)
 
     def _check_features_info_len(self, features_info, features_len):

@@ -11,7 +11,7 @@ class Initialization(object):
         self.u = u
         self.fitness = fitness
         self.init_population_size = init_population_size
-        self.initialization_components = init_components
+        self.initialization_components = tuple(init_components)
 
     def check_repeated_ind(self, population):
         i = 0
