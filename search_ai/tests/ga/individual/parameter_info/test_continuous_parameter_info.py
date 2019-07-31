@@ -46,7 +46,3 @@ class TestContinuousParameterInfo(unittest.TestCase):
     def test_continuous_parameter_info_max_value_exception(self):
         with self.assertRaises(ValueError):
             self.cpi.max_value = -10
-
-
-if __name__ == "__main__":
-    unittest.main()

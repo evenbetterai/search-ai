@@ -8,7 +8,7 @@ class ContinuousFitness(Fitness):
 
     def __init__(self, len_features, features_info):
         super(ContinuousFitness, self).__init__(len_features)
-        self._features_info = features_info
+        self._features_info = list(features_info)
 
     @property
     def features_info(self):
