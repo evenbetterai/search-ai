@@ -25,10 +25,10 @@ class Search(object):
             return low if key(el) == key(sequence[low]) else -1
 
         else:
-            return Search.binary_search_cycle(sequence, el, key, current, low, high)
+            return Search._binary_search_cycle(sequence, el, key, current, low, high)
 
     @staticmethod
-    def binary_search_cycle(sequence, el, key, current, low, high):
+    def _binary_search_cycle(sequence, el, key, current, low, high):
         while low <= high:
             if key(el) == key(sequence[current]):
                 return current

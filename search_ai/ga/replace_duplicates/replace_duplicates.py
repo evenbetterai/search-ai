@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from search_ai.utils.search import Search
+
 
 class ReplaceDuplicates(ABC):
 
@@ -12,5 +14,5 @@ class ReplaceDuplicates(ABC):
 
     def run(self, population, children):
         for index in range(len(children)):
-            while children[index] in population:
+            if Search.sequencial_search(population, children[index], lambda ind: ind.features) > -1:
                 self.replace_child(children, index)
