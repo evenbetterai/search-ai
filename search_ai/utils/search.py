@@ -18,9 +18,6 @@ class Search(object):
         high = len(sequence) - 1
         current = high // 2
 
-        if high < 0:
-            return -1
-
         while low < high:
             if key(el) == key(sequence[current]):
                 return current
@@ -33,4 +30,4 @@ class Search(object):
 
             current = (high - low) // 2 + low
         
-        return low if key(el) == key(sequence[low]) else -1
+        return low if high >= 0 and key(el) == key(sequence[low]) else -1
