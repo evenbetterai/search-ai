@@ -55,9 +55,9 @@ class TestCaseWithPopulation(TestCaseWithUtils):
             self.assertEqual(ind1.features[i], ind2.features[i])
     
     def _cmp_continuous_individuals_features_info(self, ind1, ind2):
-        for i in range(len(ind1.features_info)):
-            self.assertEqual(ind1.features_info[i].min_value, ind2.features_info[i].min_value)
-            self.assertEqual(ind1.features_info[i].max_value, ind2.features_info[i].max_value)
+        for i in range(ind1.len_features):
+            self.assertEqual(ind1.get_feature_info_at(i).min_value, ind2.get_feature_info_at(i).min_value)
+            self.assertEqual(ind1.get_feature_info_at(i).max_value, ind2.get_feature_info_at(i).max_value)
 
     def cmp_binary_individuals(self, ind1, ind2):
         self._cmp_individuals(ind1, ind2)

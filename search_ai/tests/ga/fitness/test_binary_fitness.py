@@ -31,9 +31,9 @@ class TestBinaryFitness(TestFitnesses.TestFitness):
 
     def test_binary_fitness_new_blank_individual(self):
         ind1 = self.fitness.new_blank_individual()
-        ind2 = BinaryIndividual(self.len_features)
+        ind2 = BinaryIndividual(self.len_features, False)
         self.cmp_binary_individuals(ind1, ind2)
 
         ind1 = DumbBinaryFitness(2).new_blank_individual()
-        ind2 = BinaryIndividual(2)
+        ind2 = BinaryIndividual(2, False)
         self.cmp_binary_individuals(ind1, ind2)
