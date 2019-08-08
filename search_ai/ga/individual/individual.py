@@ -13,7 +13,7 @@ class Individual(ABC):
 
     __slots__ = ["_age", "_features", "_fitness"]
 
-    def __init__(self, len_features):
+    def __init__(self, len_features, randomize_features=True):
         self._age = 0
         self._features = None
         self._fitness = 0
@@ -23,7 +23,7 @@ class Individual(ABC):
                 "'len_features' should be greater or equal to '0'"
             )
 
-        self._init_features(len_features)
+        self._init_features(len_features, randomize_features)
 
     def __eq__(self, other):
         return self._fitness == other.fitness
@@ -62,12 +62,24 @@ class Individual(ABC):
     def features(self):
         return self._features
 
+    @property
+    def len_features(self):
+        return len(self._features)
+
     def get_feature_at(self, index):
         return self._features[index]
 
-    def set_feature_at(self, index, new_value):
-        self._features[index] = new_value
+    def set_feature_at(self, index, value):
+        self._features[index] = value
 
     @abstractmethod
-    def _init_features(self, len_features):
+    def _init_features(self, len_features, randomize=False):
+        pass
+
+    @abstractmethod
+    def _randomize_features(self):
+        pass
+
+    @abstractmethod
+    def _default_features(self):
         pass

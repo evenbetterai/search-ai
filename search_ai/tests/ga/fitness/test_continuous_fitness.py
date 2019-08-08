@@ -20,31 +20,27 @@ class TestContinuousFitness(TestFitnesses.TestFitness):
             ContinuousParameterInfo(100, 1000),
         ]
 
-        self.fitness = DumbContinuousFitness(self.len_features, self.features_info)
+        self.fitness = DumbContinuousFitness(self.features_info)
 
     def test_continuous_fitness_constructor(self):
         self.check_fitness_constructor(self.fitness, self.len_features)
         self.cmp_arrays(self.fitness.features_info, self.features_info)
 
-        continuous_fitness = DumbContinuousFitness(1, self.features_info)
+        continuous_fitness = DumbContinuousFitness(self.features_info[0:1])
         self.check_fitness_constructor(continuous_fitness, 1)
 
-        continuous_fitness = DumbContinuousFitness(10, self.features_info)
+        continuous_fitness = DumbContinuousFitness(self.features_info * 2)
         self.check_fitness_constructor(continuous_fitness, 10)
 
     def test_continuous_fitness_constructor_exception(self):
-        with self.assertRaises(ValueError):
-            DumbContinuousFitness(0, self.features_info)
-            DumbContinuousFitness(-2, self.features_info)
-
         with self.assertRaises(Exception):
             DumbContinuousFitness()
 
     def test_continuous_fitness_new_blank_individual(self):
         ind1 = self.fitness.new_blank_individual()
-        ind2 = ContinuousIndividual(self.len_features, self.features_info)
+        ind2 = ContinuousIndividual(self.features_info, False)
         self.cmp_continuous_individuals(ind1, ind2)
 
-        ind1 = DumbContinuousFitness(2, [ContinuousParameterInfo(), ContinuousParameterInfo()]).new_blank_individual()
-        ind2 = ContinuousIndividual(2, [ContinuousParameterInfo(), ContinuousParameterInfo()])
+        ind1 = DumbContinuousFitness([ContinuousParameterInfo(), ContinuousParameterInfo()]).new_blank_individual()
+        ind2 = ContinuousIndividual([ContinuousParameterInfo(), ContinuousParameterInfo()], False)
         self.cmp_continuous_individuals(ind1, ind2)

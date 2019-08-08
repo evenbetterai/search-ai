@@ -11,12 +11,7 @@ class BinaryFitness(Fitness):
         super(BinaryFitness, self).__init__(len_features)
 
     def new_blank_individual(self):
-        return BinaryIndividual(self._len_features)
+        return BinaryIndividual(self._len_features, False)
 
     def new_random_individual(self):
-        ind = self.new_blank_individual()
-
-        for i in range(len(ind.features)):
-            ind.features[i] = rd.randint(0, 1)
-
-        return ind
+        return new_blank_individual(self.len_features)
