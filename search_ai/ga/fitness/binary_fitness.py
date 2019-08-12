@@ -14,4 +14,4 @@ class BinaryFitness(Fitness):
         return BinaryIndividual(self._len_features, False)
 
     def new_random_individual(self):
-        return new_blank_individual(self.len_features)
+        return BinaryIndividual(self._len_features, True)

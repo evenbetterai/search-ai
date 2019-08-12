@@ -1,8 +1,6 @@
-from unittest.mock import patch
+import unittest.mock as mock
 
-from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.tests.ga.fitness.dumb_binary_fitness import DumbBinaryFitness
-
 from search_ai.tests.ga.fitness.test_fitness import TestFitnesses
 
 
@@ -30,10 +28,13 @@ class TestBinaryFitness(TestFitnesses.TestFitness):
             DumbBinaryFitness()
 
     def test_binary_fitness_new_blank_individual(self):
-        ind1 = self.fitness.new_blank_individual()
-        ind2 = BinaryIndividual(self.len_features, False)
-        self.cmp_binary_individuals(ind1, ind2)
+        with mock.patch('search_ai.ga.fitness.binary_fitness.BinaryIndividual') as mocked_ind:
+            ind = mocked_ind.return_value
+            self.assertIs(self.fitness.new_blank_individual(), ind)
+            mocked_ind.assert_called_once_with(self.len_features, False)
 
-        ind1 = DumbBinaryFitness(2).new_blank_individual()
-        ind2 = BinaryIndividual(2, False)
-        self.cmp_binary_individuals(ind1, ind2)
+    def test_binary_fitness_new_random_individual(self):
+        with mock.patch('search_ai.ga.fitness.binary_fitness.BinaryIndividual') as mocked_ind:
+            ind = mocked_ind.return_value
+            self.assertIs(self.fitness.new_random_individual(), ind)
+            mocked_ind.assert_called_once_with(self.len_features, True)
