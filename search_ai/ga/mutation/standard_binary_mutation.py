@@ -9,4 +9,4 @@ class StandardBinaryMutation(Mutation):
         super(StandardBinaryMutation, self).__init__(mut_prob)
 
     def mutate(self, child, index):
-        child.features[index] = not child.features[index]
+        child.set_feature_at(index, not child.get_feature_at(index))

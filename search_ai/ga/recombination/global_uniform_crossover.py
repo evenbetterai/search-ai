@@ -16,7 +16,7 @@ class GlobalUniformCrossover(Recombination):
             child = self._fitness.new_blank_individual()
 
             for i in range(len(child.features)):
-                child.features[i] = rd.choice(parents).features[i]
+                child.set_feature_at(i, rd.choice(parents).get_feature_at(i))
 
             children += [child]
 
