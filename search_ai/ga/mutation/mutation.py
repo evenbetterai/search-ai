@@ -21,7 +21,7 @@ class Mutation(ABC):
                              'number between \'0\' and \'1\'')
 
     def run(self, child):
-        for i in range(len(child.features)):
+        for i in range(child.len_features()):
             if rd.random() < self._mutation_prob:
                 self.mutate(child, i)
 
