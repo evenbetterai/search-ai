@@ -18,4 +18,4 @@ class ContinuousFitness(Fitness):
         return ContinuousIndividual(self._features_info, False)
 
     def new_random_individual(self):
-        return ContinuousIndividual(self._features_info)
+        return ContinuousIndividual(self._features_info, True)
