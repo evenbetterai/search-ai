@@ -1,7 +1,7 @@
 import numpy as np
 
 from search_ai.ga.individual.continuous_individual import ContinuousIndividual
-from search_ai.ga.individual.parameter_info.continuous_parameter_info import ContinuousParameterInfo
+from search_ai.ga.individual.feature_info.continuous_feature_info import ContinuousFeatureInfo
 
 from search_ai.tests.ga.individual.test_individual import TestIndividuals
 
@@ -14,15 +14,15 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
 
     def setUp(self):
         self.continuous_params_info_array_1 = [
-            ContinuousParameterInfo(2),
-            ContinuousParameterInfo(0, 1),
-            ContinuousParameterInfo(-3, 8),
-            ContinuousParameterInfo()
+            ContinuousFeatureInfo(2),
+            ContinuousFeatureInfo(0, 1),
+            ContinuousFeatureInfo(-3, 8),
+            ContinuousFeatureInfo()
         ]
         self.continuous_params_info_array_2 = [
-            ContinuousParameterInfo(7, 10),
-            ContinuousParameterInfo(5),
-            ContinuousParameterInfo(3, 4)
+            ContinuousFeatureInfo(7, 10),
+            ContinuousFeatureInfo(5),
+            ContinuousFeatureInfo(3, 4)
         ]
         self.init_values_continuous_params_info_array_1 = [2, 0, -3, 0]
         self.init_values_continuous_params_info_array_2 = [7, 5, 3]
@@ -131,48 +131,48 @@ class TestContinuousIndividual(TestIndividuals.TestIndividual):
             self.ind.set_feature_at(1, 1000)
 
     def test_continuous_individual_set_feature_info_at(self):
-        self.ind.set_feature_info_at(0, ContinuousParameterInfo(1, 3.2))
-        self.assertEqual(self.ind._features_info[0], ContinuousParameterInfo(1, 3.2))
+        self.ind.set_feature_info_at(0, ContinuousFeatureInfo(1, 3.2))
+        self.assertEqual(self.ind._features_info[0], ContinuousFeatureInfo(1, 3.2))
 
-        self.ind.set_feature_info_at(1, ContinuousParameterInfo(1.1, 1.2))
-        self.assertEqual(self.ind._features_info[1], ContinuousParameterInfo(1.1, 1.2))
+        self.ind.set_feature_info_at(1, ContinuousFeatureInfo(1.1, 1.2))
+        self.assertEqual(self.ind._features_info[1], ContinuousFeatureInfo(1.1, 1.2))
 
-        self.ind.set_feature_info_at(2, ContinuousParameterInfo(-2.3, -1))
-        self.assertEqual(self.ind._features_info[2], ContinuousParameterInfo(-2.3, -1))
+        self.ind.set_feature_info_at(2, ContinuousFeatureInfo(-2.3, -1))
+        self.assertEqual(self.ind._features_info[2], ContinuousFeatureInfo(-2.3, -1))
 
-        self.assertEqual(self.ind._features_info[3], ContinuousParameterInfo(0, 100))
+        self.assertEqual(self.ind._features_info[3], ContinuousFeatureInfo(0, 100))
 
 
-        self.ind.set_feature_info_at(-4, ContinuousParameterInfo(1.4, 5))
-        self.assertEqual(self.ind._features_info[0], ContinuousParameterInfo(1.4, 5))
+        self.ind.set_feature_info_at(-4, ContinuousFeatureInfo(1.4, 5))
+        self.assertEqual(self.ind._features_info[0], ContinuousFeatureInfo(1.4, 5))
 
-        self.ind.set_feature_info_at(-3, ContinuousParameterInfo(-1.4, -0.1))
-        self.assertEqual(self.ind._features_info[1], ContinuousParameterInfo(-1.4, -0.1))
+        self.ind.set_feature_info_at(-3, ContinuousFeatureInfo(-1.4, -0.1))
+        self.assertEqual(self.ind._features_info[1], ContinuousFeatureInfo(-1.4, -0.1))
 
-        self.ind.set_feature_info_at(-2, ContinuousParameterInfo(14, 51))
-        self.assertEqual(self.ind._features_info[2], ContinuousParameterInfo(14, 51))
+        self.ind.set_feature_info_at(-2, ContinuousFeatureInfo(14, 51))
+        self.assertEqual(self.ind._features_info[2], ContinuousFeatureInfo(14, 51))
 
-        self.ind.set_feature_info_at(-1, ContinuousParameterInfo(14.2, 15))
-        self.assertEqual(self.ind._features_info[3], ContinuousParameterInfo(14.2, 15))
+        self.ind.set_feature_info_at(-1, ContinuousFeatureInfo(14.2, 15))
+        self.assertEqual(self.ind._features_info[3], ContinuousFeatureInfo(14.2, 15))
 
     def test_continuous_individual_set_feature_info_at_exception(self):
         with self.assertRaises(Exception):
-            self.ind.set_feature_info_at(-5, ContinuousParameterInfo())
-            self.ind.set_feature_info_at(4, ContinuousParameterInfo())
-            self.ind.set_feature_info_at(100, ContinuousParameterInfo())
+            self.ind.set_feature_info_at(-5, ContinuousFeatureInfo())
+            self.ind.set_feature_info_at(4, ContinuousFeatureInfo())
+            self.ind.set_feature_info_at(100, ContinuousFeatureInfo())
 
     def test_continuous_individual_get_feature_info_at(self):
-        self.ind.set_feature_info_at(0, ContinuousParameterInfo(0.2, 1))
-        self.ind.set_feature_info_at(2, ContinuousParameterInfo(-14.2, -10))
+        self.ind.set_feature_info_at(0, ContinuousFeatureInfo(0.2, 1))
+        self.ind.set_feature_info_at(2, ContinuousFeatureInfo(-14.2, -10))
 
-        self.assertEqual(self.ind.get_feature_info_at(0), ContinuousParameterInfo(0.2, 1))
-        self.assertEqual(self.ind.get_feature_info_at(-4), ContinuousParameterInfo(0.2, 1))
-        self.assertEqual(self.ind.get_feature_info_at(1), ContinuousParameterInfo(0, 1))
-        self.assertEqual(self.ind.get_feature_info_at(-3), ContinuousParameterInfo(0, 1))
-        self.assertEqual(self.ind.get_feature_info_at(2), ContinuousParameterInfo(-14.2, -10))
-        self.assertEqual(self.ind.get_feature_info_at(-2), ContinuousParameterInfo(-14.2, -10))
-        self.assertEqual(self.ind.get_feature_info_at(3), ContinuousParameterInfo(0, 100))
-        self.assertEqual(self.ind.get_feature_info_at(-1), ContinuousParameterInfo(0, 100))
+        self.assertEqual(self.ind.get_feature_info_at(0), ContinuousFeatureInfo(0.2, 1))
+        self.assertEqual(self.ind.get_feature_info_at(-4), ContinuousFeatureInfo(0.2, 1))
+        self.assertEqual(self.ind.get_feature_info_at(1), ContinuousFeatureInfo(0, 1))
+        self.assertEqual(self.ind.get_feature_info_at(-3), ContinuousFeatureInfo(0, 1))
+        self.assertEqual(self.ind.get_feature_info_at(2), ContinuousFeatureInfo(-14.2, -10))
+        self.assertEqual(self.ind.get_feature_info_at(-2), ContinuousFeatureInfo(-14.2, -10))
+        self.assertEqual(self.ind.get_feature_info_at(3), ContinuousFeatureInfo(0, 100))
+        self.assertEqual(self.ind.get_feature_info_at(-1), ContinuousFeatureInfo(0, 100))
         
     def test_continuous_individual_get_feature_info_at_exception(self):
         with self.assertRaises(Exception):
