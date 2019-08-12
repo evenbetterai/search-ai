@@ -2,7 +2,7 @@ import functools as ft
 
 
 @ft.total_ordering
-class ContinuousParameterInfo(object):
+class ContinuousFeatureInfo(object):
     '''
     Hold a number in a specific  domain.
     '''

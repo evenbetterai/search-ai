@@ -10,6 +10,10 @@ class ContinuousIndividual(Individual):
         self._features_info = list(features_info)
         super(ContinuousIndividual, self).__init__(len(features_info), randomize_features)
 
+    @property
+    def features_info(self):
+        return self._features_info
+
     def get_feature_info_at(self, index):
         return self._features_info[index]
 
@@ -22,8 +26,8 @@ class ContinuousIndividual(Individual):
 
             raise ValueError(
                 "'value' parameter has to hold a " +
-                "number between _features[index].min_value" +
-                " and _features[index].max_value"
+                "number between features_info[index].min_value" +
+                " and features_info[index].max_value"
             )
 
         self._features[index] = value
