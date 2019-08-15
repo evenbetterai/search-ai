@@ -41,7 +41,7 @@ class ContinuousIndividual(Individual):
             self._default_features()
 
     def _randomize_features(self):
-       for i in range(len(self._features)):
+        for i in range(len(self._features)):
             self._features[i] = rd.uniform(self._features_info[i].min_value, self._features_info[i].max_value)
 
     def _default_features(self):
