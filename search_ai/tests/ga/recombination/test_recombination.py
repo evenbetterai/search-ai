@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock
+import unittest.mock as mock
 
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.tests.test_case_with_utils import TestCaseWithUtils
@@ -11,17 +11,15 @@ class TestRecombinations(object):
         def setUp(self):
             self.len_features = 5
             self.number_of_children = 4
-
-        def set_up_fitness(self, number_of_children, times):
-            self.fitness = MagicMock()
-            self.fitness.new_blank_individual.side_effect = [BinaryIndividual(self.len_features) for i in range(number_of_children)] * times
- 
-        def check_fitness_interface(self, fitness):
-            self.assertTrue(hasattr(fitness, 'new_blank_individual'))
+            self.number_of_parents = 4
+            self.children = [self._mock_child() for _ in range(self.number_of_children)]
+            self.parents = [self._mock_parent() for _ in range(self.number_of_parents)]
+            self.fitness = mock.MagicMock()
+            self.fitness.new_blank_individual.side_effect = self.children
 
         def check_recombination_attributes(self, recombination, number_of_children):
            self.assertEqual(self.number_of_children, self.recombination.number_of_children) 
-           self.check_fitness_interface(self.recombination.fitness)
+           self.assertIs(self.fitness, self.recombination.fitness)
 
         def test_recombination_number_of_children(self):
             self.assertEqual(self.recombination.number_of_children, self.number_of_children)
@@ -36,3 +34,19 @@ class TestRecombinations(object):
             with self.assertRaises(ValueError):
                 self.recombination.number_of_children = -100
                 self.recombination.number_of_children = 0
+
+        def test_recombination_fitness(self):
+            new_mock = mock.MagicMock()
+            self.recombination.fitness = new_mock
+            self.assertIs(new_mock, self.recombination.fitness)
+
+        def _mock_parent(self):
+            parent = mock.MagicMock()
+            parent.get_feature_at.return_value = True
+            return parent
+
+        def _mock_child(self):
+            child = mock.MagicMock()
+            child.set_feature_at.return_value = None
+            child.len_features.return_value = self.len_features
+            return child

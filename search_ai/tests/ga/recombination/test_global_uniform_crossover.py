@@ -1,3 +1,5 @@
+import unittest.mock as mock
+
 from search_ai.ga.recombination.global_uniform_crossover import GlobalUniformCrossover
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 
@@ -13,7 +15,6 @@ class TestGlobalUniformCrossover(TestRecombinations.TestRecombination):
 
     def setUp(self):
         super(TestGlobalUniformCrossover, self).setUp()
-        self.set_up_fitness(self.number_of_children, 3)
         self.recombination = GlobalUniformCrossover(self.fitness, self.number_of_children)
 
     def test_global_uniform_crossover_constructor(self):
@@ -27,25 +28,27 @@ class TestGlobalUniformCrossover(TestRecombinations.TestRecombination):
             GlobalUniformCrossover(self.fitness, 0)
 
     def test_global_uniform_crossover_run(self):            
-        parents = [BinaryIndividual(self.len_features) for _ in range(3)]
-        children_to_compare = [BinaryIndividual(self.len_features) for _ in range(self.number_of_children)]
-        children = self.recombination.run(parents)
-        self.cmp_arrays(children, children_to_compare)
+        children = self.recombination.run(self.parents)
+        self.cmp_arrays(children, self.children, lambda x, y: x is y)
+        self.assertEqual(self.fitness.new_blank_individual.call_count, self.number_of_children)
+        self.assertEqual(self.fitness.new_blank_individual.call_args_list, [mock.call() for _ in range(self.number_of_children)])
+        self._assert_child_and_parent_mock_calls(self.children, self.parents)
 
-        self.set_all_individuals_features(parents, 1)
-        self.set_all_individuals_features(children_to_compare, 1)
-        children = self.recombination.run(parents)
-        self.cmp_arrays(children, children_to_compare)
-
-        self.set_all_individuals_features(parents, 0)
-        diff_index = 0
-        parents[1].set_feature_at(diff_index, 1)
-        children = self.recombination.run(parents)
-
+    def _assert_child_and_parent_mock_calls(self, children, parents):
         for child in children:
-            for i in range(self.len_features):
-                if i == diff_index:
-                    self.assertTrue(child.features[i] == 0 or child.features[i] == 1)
+            child.len_features.assert_called_once_with()
+            self.assertEqual(child.set_feature_at.call_count, self.len_features)
 
-                else:
-                    self.assertEqual(child.features[i], parents[0].features[i])
+            for i in range(self.len_features):
+                child.set_feature_at.assert_any_call(i, True)
+                self._assert_only_one_parent_has_call_with_index_per_child(self.parents, i)
+
+    def _assert_only_one_parent_has_call_with_index_per_child(self, parents, index):
+        called = 0
+
+        for parent in parents:
+            for call in parent.get_feature_at.call_args_list:
+                if call == mock.call(index):
+                    called += 1
+
+        self.assertEqual(called, self.number_of_children)
