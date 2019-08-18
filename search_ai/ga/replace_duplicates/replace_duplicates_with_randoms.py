@@ -10,4 +10,6 @@ class ReplaceDuplicatesWithRandoms(ReplaceDuplicates):
         self._fitness = fitness
 
     def replace_child(self, children, index):
-        children[index] = self._fitness.new_random_individual()
+        child = self._fitness.new_random_individual()
+        self._fitness.run(child)
+        children[index] = child

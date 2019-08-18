@@ -13,6 +13,6 @@ class ReplaceDuplicates(ABC):
         pass
 
     def run(self, population, children):
-        for index in range(len(children)):
+        for index in range(len(children) -1, -1, -1):
             if Search.sequencial_search(population, children[index], lambda ind: ind.features) > -1:
                 self.replace_child(children, index)
