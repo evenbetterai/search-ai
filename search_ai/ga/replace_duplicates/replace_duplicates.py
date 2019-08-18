@@ -9,12 +9,10 @@ class ReplaceDuplicates(ABC):
         pass
 
     @abstractmethod
-    def replace_child(self, population, index):
+    def replace_child(self, children, index):
         pass
 
     def run(self, population, children):
-        for child in children:
-            population_index = Search.sequencial_search(population, child, lambda ind: ind.features)
-
-            if population_index >= 0:
-                self.replace_child(population, population_index)
+        for index in range(len(children) -1, -1, -1):
+            if Search.sequencial_search(population, children[index], lambda ind: ind.features) > -1:
+                self.replace_child(children, index)

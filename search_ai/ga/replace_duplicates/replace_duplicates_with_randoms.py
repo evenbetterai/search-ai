@@ -9,5 +9,7 @@ class ReplaceDuplicatesWithRandoms(ReplaceDuplicates):
         super(ReplaceDuplicatesWithRandoms, self).__init__()
         self._fitness = fitness
 
-    def replace_child(self, population, index):
-        population[index] = self._fitness.new_random_individual()
+    def replace_child(self, children, index):
+        child = self._fitness.new_random_individual()
+        self._fitness.run(child)
+        children[index] = child
