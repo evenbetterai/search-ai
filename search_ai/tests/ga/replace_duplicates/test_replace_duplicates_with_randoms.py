@@ -1,10 +1,10 @@
 import unittest.mock as mock
 
 from search_ai.ga.replace_duplicates.replace_duplicates_with_randoms import ReplaceDuplicatesWithRandoms
-from search_ai.tests.ga.test_case_with_population import TestCaseWithPopulation
+from search_ai.tests.test_case_with_utils import TestCaseWithUtils
 
 
-class TestReplaceDuplicatesWithRandoms(TestCaseWithPopulation):
+class TestReplaceDuplicatesWithRandoms(TestCaseWithUtils):
 
     def setUp(self):
         self.u = 10
