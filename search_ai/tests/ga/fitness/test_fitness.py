@@ -1,9 +1,9 @@
-from search_ai.tests.ga.test_case_with_population import TestCaseWithPopulation
+from search_ai.tests.test_case_with_utils import TestCaseWithUtils
 
 
 class TestFitnesses(object):
 
-    class TestFitness(TestCaseWithPopulation):
+    class TestFitness(TestCaseWithUtils):
 
         def setUp(self):
             self.len_features = 10

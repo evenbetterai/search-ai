@@ -28,5 +28,5 @@ class ThreadWithReturn(Thread):
             self._return = self._target(*self._args, **self._kwargs)
 
     def join(self, *args):
-        super(ThreadWithReturn, self).join(self, *args)
+        super(ThreadWithReturn, self).join(*args)
         return self._return
