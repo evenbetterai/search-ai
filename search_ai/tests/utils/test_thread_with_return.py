@@ -12,8 +12,8 @@ class TestThreadWithReturn(unittest.TestCase):
     def test_thread_with_return_init(self):
         self.assertEqual(self.thread._return, None)
         self.assertEqual(ThreadWithReturn()._return, None)
-        self.assertEqual(ThreadWithReturn("something", lambda: print(1), "b", (2,), {"c": 3})._return, None)
+        self.assertEqual(ThreadWithReturn(None, lambda: print(1), "b", (2,), {"c": 3})._return, None)
         
-    def test_thread_with_return_start(self):
+    def test_thread_with_return_join(self):
         self.thread.start()
         self.assertEqual(self.thread.join(), self.thread_should_return)
