@@ -17,3 +17,14 @@ class TestThreadWithReturn(unittest.TestCase):
     def test_thread_with_return_join(self):
         self.thread.start()
         self.assertEqual(self.thread.join(), self.thread_should_return)
+
+    def test_thread_with_return_run(self):
+        self.assertEqual(ThreadWithReturn().run(), None)
+        self.assertEqual(ThreadWithReturn(target=lambda: 1).run(), None)
+
+    def test_thread_with_return_create_and_start_threads(self):
+        threads = ThreadWithReturn.create_and_start_threads(10, lambda x, y: x + y, (1, 1))
+
+        for thread in threads:
+            self.assertIsInstance(thread, ThreadWithReturn)
+            self.assertEqual(thread.join(), 2)
