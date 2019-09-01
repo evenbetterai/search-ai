@@ -4,11 +4,10 @@ from threading import Thread
 class ThreadWithReturn(Thread):
 
     @staticmethod
-    def create_and_start_threads(n, target_func, args_func):
+    def create_and_start_threads(n, target_func, args_tup):
         threads_list = []
 
         for i in range(n):
-            args_tup = args_func()
             t = ThreadWithReturn(target=target_func, args=args_tup)
             threads_list.append(t)
             t.start()
