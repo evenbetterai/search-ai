@@ -1,44 +1,11 @@
-from search_ai.ga.initialization.initialization_component import InitializationComponent
-
-
 class Initialization(object):
 
-    def __init__(
-            self, u, fitness, init_population_size,
-            init_components=tuple()
-    ):
+    def __init__(self, u, init_population_size, fitness, rep_dup):
         self._init_population_size = init_population_size
         self.u = u
-        self.fitness = fitness
         self.init_population_size = init_population_size
-        self.initialization_components = tuple(init_components)
-
-    def check_repeated_ind(self, population):
-        i = 0
-        len_pop = len(population)
-
-        while i < len_pop:
-            cont = True
-
-            for j in range(i + 1, len_pop):
-                if population[i] == population[j]:
-                    population[i] = self._fitness.new_random_individual(
-                    )
-                    cont = False
-                    break
-
-            if cont:
-                i += 1
-
-        return population
-
-    @property
-    def initialization_components(self):
-        return self._initialization_components
-
-    @initialization_components.setter
-    def initialization_components(self, new_init_components_list):
-        self._initialization_components = new_init_components_list
+        self.fitness = fitness
+        self.replace_duplicates = rep_dup
 
     @property
     def init_population_size(self):
@@ -61,20 +28,24 @@ class Initialization(object):
     def fitness(self, new_fitness):
         self._fitness = new_fitness
 
+    @property
+    def replace_duplicates(self):
+        return self._replace_duplicates
+
+    @replace_duplicates.setter
+    def replace_duplicates(self, new_rep_dup):
+        self._replace_duplicates = new_rep_dup
+
     def run(self):
-        population = []
+        children = []
 
         for _ in range(self._init_population_size):
             ind = self._fitness.new_random_individual()
             self._fitness.run(ind)
-            population.append(ind)
+            children.append(ind)
+            self._replace_duplicates([], children)
 
-        population = self.check_repeated_ind(population)
-
-        for component in self._initialization_components:
-            population = component.run(population)
-
-        return sorted(population, reverse=True)[0:self._u]
+        return children.sort(reverse=True)[0:self._u]
 
     @property
     def u(self):
