@@ -1,7 +1,6 @@
 import unittest
 import unittest.mock as mock
 
-from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.tests.test_case_with_utils import TestCaseWithUtils
 
 class TestRecombinations(object):

@@ -1,12 +1,13 @@
 import unittest.mock as mock
 
-from search_ai.ga.replace_duplicates.replace_duplicates_with_randoms import ReplaceDuplicatesWithRandoms
-from search_ai.tests.test_case_with_utils import TestCaseWithUtils
+from search_ai.ga.replace_duplicates.replace_children_duplicates_with_randoms import ReplaceChildrenDuplicatesWithRandoms
+from search_ai.tests.ga.replace_duplicates.test_replace_duplicates import TestReplaceDuplicatesWrapper
 
 
-class TestReplaceDuplicatesWithRandoms(TestCaseWithUtils):
-
+class TestChildrenReplaceDuplicatesWithRandoms(TestReplaceDuplicatesWrapper.TestReplaceDuplicates):
+    
     def setUp(self):
+        super(TestReplaceDuplicatesWithRandoms, self).setUp()
         self.u = 10
         self.l = self.u * 3
         self.diff = 2
@@ -15,7 +16,6 @@ class TestReplaceDuplicatesWithRandoms(TestCaseWithUtils):
         self.old_children = list(self.children)
         self.new_children = [mock.MagicMock() for _ in range(self.diff)]
 
-        self.fitness = mock.MagicMock()
         self.fitness.new_random_individual.side_effect = self.new_children
         self.fitness.run.return_value = None
 
