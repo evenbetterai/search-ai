@@ -58,8 +58,8 @@ class GeneticAlgorithm(object):
         return self._fitness
 
     @fitness.setter
-    def fitness(self, new_fitness):
-        self._fitness = new_fitness
+    def fitness(self, fitness):
+        self._fitness = fitness
 
     @property
     def elitism(self):

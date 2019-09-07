@@ -1,99 +1,39 @@
-from unittest.mock import MagicMock
+import unittest.mock as mock
 
 from search_ai.ga.fitness.fitness import Fitness
 from search_ai.ga.individual.binary_individual import BinaryIndividual
 from search_ai.ga.initialization.initialization import Initialization
-from search_ai.ga.initialization.initialization_component import InitializationComponent
 from search_ai.tests.ga.test_case_with_population import TestCaseWithPopulation
 
 
 class TestInitialization(TestCaseWithPopulation):
 
-    def mock_fitness(self, population):
-        self.fitness = MagicMock()
-        self.fitness.new_random_individual.side_effect = list(
-            population
-        )
-        self.fitness.run.return_value = None
-
-    def mock_init_components(
-            self, u, init_population_size, population
-    ):
-        self.n_init_components = 1
-        self.init_component = MagicMock()
-        self.init_component.run.return_value = list(
-            [population[0]] * (init_population_size//2) +
-            population[0:init_population_size // 2]
-        )
-        self.best_individuals_with_init_component = list(
-            population[init_population_size//2 -
-                       u:init_population_size // 2]
-        )[::-1]
-
-    def check_initialization_after_creattion(
-            self, init, u, init_population_size, n_init_components
-    ):
-        self.assertEqual(init.u, u)
-        self.assertEqual(
-            init.init_population_size, init_population_size
-        )
-
-        self.assertEqual(
-            len(init.initialization_components), n_init_components
-        )
-
-    def check_fitness_behaviour(self, fitness, individuals):
-        self.assertEqual(
-            fitness.new_random_individual.call_count, len(individuals)
-        )
-        self.assertEqual(fitness.run.call_count, len(individuals))
-
-        for individual in individuals:
-            fitness.run.assert_any_call(individual)
-
-    def check_initialization_components_behaviour(
-            self, init_components
-    ):
-        for init_component in init_components:
-            self.assertEqual(init_component.run.call_count, 1)
-            init_component.run.assert_called_with(self.population)
-
     def setUp(self):
         self.u = 10
         self.init_population_size = 50
-        self.population = self.create_population(
-            self.init_population_size
-        )
-        self.best_individuals = list(
-            self.population[self.init_population_size - self.u:]
-        )[::-1]
-
-        self.mock_fitness(self.population)
-        self.mock_init_components(
-            self.u, self.init_population_size, self.population
-        )
+        self.population = [mock.MagicMock() for _ in range(self.init_population_size)]
+        self._mock_fitness(self.population)
+        self._mock_replace_duplicates()
 
         self.init = Initialization(
-            self.u, self.fitness, self.init_population_size,
-            (self.init_component, )
+            self.u, self.init_population_size, self.fitness, self.replace_duplicates
         )
 
     def test_initialization_constructor(self):
-        self.check_initialization_after_creattion(
-            self.init, self.u, self.init_population_size,
-            self.n_init_components
+        self._check_initialization_after_creattion(
+            self.init, self.u, self.init_population_size, self.fitness, self.replace_duplicates
         )
 
         u = 2
-        other_init = Initialization(u, self.fitness, u)
-        self.check_initialization_after_creattion(other_init, u, u, 0)
+        other_init = Initialization(u, u, None, None)
+        self._check_initialization_after_creattion(other_init, u, u, None, None)
 
     def test_initialization_constructor_exception(self):
         with self.assertRaises(ValueError):
-            Initialization(-1, None, 10)
-            Initialization(1, None, 9)
-            Initialization(10, None, -4)
-            Initialization(10, None, 9)
+            Initialization(-1, 10, None, None)
+            Initialization(1, 9, None, None)
+            Initialization(10, -4, None, None)
+            Initialization(10, 9, object(), object())
 
     def test_initialization_u(self):
         self.assertEqual(self.init.u, self.u)
@@ -127,23 +67,29 @@ class TestInitialization(TestCaseWithPopulation):
             self.init.init_population_size = 1
             self.init.init_population_size = -19
 
-    def test_initialization_run(self):
-        population = self.init.run()
-        self.cmp_arrays(
-            population, self.best_individuals_with_init_component
-        )
-        self.check_fitness_behaviour(self.init.fitness, self.population)
-        self.check_initialization_components_behaviour(
-            self.init.initialization_components
-        )
+    def test_initialization_fitness(self):
+        self.assertIs(self.init.fitness, self.fitness)
 
-        self.init.initialization_components = ()
-        self.mock_fitness(self.population)
-        self.init.fitness = self.fitness
-        population = self.init.run()
-        self.cmp_arrays(population, self.best_individuals)
-        self.check_fitness_behaviour(self.init.fitness, self.population)
-        self.assertEqual(self.init_component.call_count, 0)
+        new_fitness = object()
+        self.init.fitness = new_fitness
+        self.assertIs(self.init.fitness, new_fitness)
+
+    def test_initialization_replace_duplicates(self):
+        self.assertIs(self.init.replace_duplicates, self.replace_duplicates)
+        
+        new_replace_duplicates = object()
+        self.init.replace_duplicates = new_replace_duplicates
+        self.assertIs(self.init.replace_duplicates, new_replace_duplicates)
+
+    def test_initialization_run(self):
+        with mock.patch('search_ai.ga.initialization.initialization.sorted') as mock_sorted:
+            mock_sorted.return_value = self.population
+            population = self.init.run()
+
+            mock_sorted.assert_called_once_with(self.population, reverse=True)
+            self.cmp_arrays(population, self.population[0:self.u])
+            self._check_fitness_behaviour(self.init.fitness, self.population)
+            self._check_replace_duplicates_behaviour(self.init.replace_duplicates, self.population)
 
     def test_initialization_run_exception(self):
         self.init.fitness = object()
@@ -156,3 +102,36 @@ class TestInitialization(TestCaseWithPopulation):
 
         with self.assertRaises(Exception):
             self.init.run()
+
+    def _mock_fitness(self, population):
+        self.fitness = mock.MagicMock()
+        self.fitness.new_random_individual.side_effect = list(population)
+        self.fitness.run.return_value = None
+
+    def _mock_replace_duplicates(self):
+        self.replace_duplicates = mock.MagicMock()
+        self.replace_duplicates.run.return_value = None
+
+    def _check_initialization_after_creattion(
+            self, init, u, init_population_size, fitness, replace_duplicates
+    ):
+        self.assertEqual(init.u, u)
+        self.assertEqual(
+            init.init_population_size, init_population_size
+        )
+
+        self.assertIs(init.fitness, fitness)
+        self.assertIs(init.replace_duplicates, replace_duplicates)
+
+    def _check_fitness_behaviour(self, fitness, population):
+        self.assertEqual(
+            fitness.new_random_individual.call_count, len(population)
+        )
+        self.assertEqual(fitness.run.call_count, len(population))
+
+        for i in range(len(fitness.run.call_args_list)):
+            self.assertEqual(fitness.run.call_args_list[i], mock.call(population[i]))
+            self.assertEqual(fitness.new_random_individual.call_args_list[i], mock.call())
+
+    def _check_replace_duplicates_behaviour(self, replace_duplicates, population):
+        replace_duplicates.run.assert_called_once_with(population)
