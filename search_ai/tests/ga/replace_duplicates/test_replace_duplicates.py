@@ -8,6 +8,7 @@ class TestReplaceDuplicatesWrapper(object):
     class TestReplaceDuplicates(TestCaseWithUtils):
 
         def setUp(self):
+            super(TestReplaceDuplicatesWrapper.TestReplaceDuplicates, self).setUp()
             self.fitness = mock.MagicMock()
 
         def check_recplace_duplicates_attributes(self, replace_duplucates, fitness):
@@ -18,4 +19,4 @@ class TestReplaceDuplicatesWrapper(object):
 
             new_fitness = object()
             self.replace_duplicates.fitness = new_fitness
-            self.assertIs(self.replace_duplicates, new_fitness)
+            self.assertIs(self.replace_duplicates.fitness, new_fitness)

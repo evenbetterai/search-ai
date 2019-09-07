@@ -1,9 +1,9 @@
 import random as rd
 
-from search_ai.ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
+from search_ai.ga.replace_duplicates.replace_children_duplicates import ReplaceChildrenDuplicates
 
 
-class ReplaceChildrenDuplicatesWithRandoms(ReplaceDuplicates):
+class ReplaceChildrenDuplicatesWithRandoms(ReplaceChildrenDuplicates):
 
     def __init__(self, fitness):
         super(ReplaceChildrenDuplicatesWithRandoms, self).__init__(fitness)
