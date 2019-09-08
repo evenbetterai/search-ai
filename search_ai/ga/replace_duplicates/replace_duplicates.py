@@ -17,5 +17,5 @@ class ReplaceDuplicates(ABC):
         self._fitness = fitness
 
     @abstractmethod
-    def run(self, population, children):
+    def run(self, **kwargs):
         pass
