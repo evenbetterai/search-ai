@@ -5,19 +5,14 @@ from search_ai.utils.search import Search
 
 class ReplaceChildrenDuplicates(ReplaceDuplicates):
 
-    def __init__(self, fitness):
-        super(ReplaceChildrenDuplicates, self).__init__(fitness)
-        self._population = None
+    def __init__(self, replacer):
+        super(ReplaceChildrenDuplicates, self).__init__(replacer)
         self._children = None
-
-    @abstractmethod
-    def replace_child(self, index):
-        pass
 
     def run(self, **kwargs):
         self._population = kwargs['population']
         self._children = kwargs['children']
 
         for i in range(len(self._children)):
-            if Search.sequencial_search(self._population, self._children[i], lambda ind: ind.features) > -1:
-                self.replace_child(i)
+            if Search.sequencial_search(self._population, self._children[i], ReplaceDuplicates.cmp_by_features) > -1:
+                self._replacer.replace_in_children(self, i)

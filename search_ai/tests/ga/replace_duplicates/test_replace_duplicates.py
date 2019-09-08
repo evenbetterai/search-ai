@@ -9,14 +9,14 @@ class TestReplaceDuplicatesWrapper(object):
 
         def setUp(self):
             super(TestReplaceDuplicatesWrapper.TestReplaceDuplicates, self).setUp()
-            self.fitness = mock.MagicMock()
+            self.replacer = mock.MagicMock()
 
-        def check_recplace_duplicates_attributes(self, replace_duplucates, fitness):
-           self.assertIs(self.fitness, self.replace_duplicates.fitness)
+        def check_recplace_duplicates_attributes(self, replace_duplicates, replacer):
+           self.assertIs(replacer, replace_duplicates.replacer)
 
-        def test_replace_duplicates_fitness(self):
-            self.assertIs(self.fitness, self.replace_duplicates.fitness)
+        def test_replace_duplicates_replacer(self):
+            self.assertIs(self.replacer, self.replace_duplicates.replacer)
 
-            new_fitness = object()
-            self.replace_duplicates.fitness = new_fitness
-            self.assertIs(self.replace_duplicates.fitness, new_fitness)
+            new_replacer = object()
+            self.replace_duplicates.replacer = new_replacer
+            self.assertIs(self.replace_duplicates.replacer, new_replacer)
