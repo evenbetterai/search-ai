@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from search_ai.ga.fitness_holder import FitnessHolder
 
 

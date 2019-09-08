@@ -8,7 +8,7 @@ class FitnessHolder(ABC):
 
     @property
     def fitness(self):
-        return self.fitness
+        return self._fitness
 
     @fitness.setter
     def fitness(self, fitness):

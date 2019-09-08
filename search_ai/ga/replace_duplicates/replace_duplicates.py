@@ -5,16 +5,21 @@ from search_ai.utils.search import Search
 
 class ReplaceDuplicates(ABC):
 
-    def __init__(self, fitness):
-        self._fitness = fitness
+    @staticmethod
+    def cmp_by_features(self, individual):
+        return individual.features
+
+    def __init__(self, replacer):
+        self._replacer = replacer
+        self._population = None
 
     @property
-    def fitness(self):
-        return self._fitness
+    def replacer(self):
+        return self._replacer
 
-    @fitness.setter
-    def fitness(self, fitness):
-        self._fitness = fitness
+    @replacer.setter
+    def replacer(self, replacer):
+        self._replacer = replacer
 
     @abstractmethod
     def run(self, **kwargs):
