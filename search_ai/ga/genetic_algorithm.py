@@ -1,14 +1,7 @@
-import math
-
-from search_ai.ga.fitness.fitness import Fitness
-from search_ai.ga.initialization.initialization import Initialization
-from search_ai.ga.mutation.mutation import Mutation
-from search_ai.ga.recombination.recombination import Recombination
-from search_ai.ga.replace_duplicates.replace_duplicates import ReplaceDuplicates
-from search_ai.ga.selection.selection import Selection
+from search_ai.ga.fitness_holder import FitnessHolder
 
 
-class GeneticAlgorithm(object):
+class GeneticAlgorithm(FitnessHolder):
 
     def __init__(
             self,
@@ -25,6 +18,8 @@ class GeneticAlgorithm(object):
             elitism=0,
             stop_crit=None
     ):
+        super(GeneticAlgorithm, self).__init__(fitness)
+
         self._current_gen = 0
         self._population = None
         self.u = u
@@ -33,7 +28,6 @@ class GeneticAlgorithm(object):
         self.p = p
         self.replace_duplicates = replace_dup
         self.elitism = int(self._u * elitism)
-        self._fitness = fitness
         self._initialization = init
         self._selection = sel
         self._recombination = rec
@@ -52,14 +46,6 @@ class GeneticAlgorithm(object):
     @property
     def current_generation(self):
         return self._current_gen
-
-    @property
-    def fitness(self):
-        return self._fitness
-
-    @fitness.setter
-    def fitness(self, new_fitness):
-        self._fitness = new_fitness
 
     @property
     def elitism(self):

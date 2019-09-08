@@ -1,19 +1,13 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+
+from search_ai.ga.fitness_holder import FitnessHolder
 
 
-class Recombination(ABC):
+class Recombination(FitnessHolder):
 
     def __init__(self, fitness, num_of_children):
-        self.fitness = fitness
+        super(Recombination, self).__init__(fitness)
         self.number_of_children = num_of_children
-
-    @property
-    def fitness(self):
-        return self._fitness
-
-    @fitness.setter
-    def fitness(self, fitness):
-        self._fitness = fitness
 
     @property
     def number_of_children(self):

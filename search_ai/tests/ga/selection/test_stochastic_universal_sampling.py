@@ -27,9 +27,11 @@ class TestStochasticUniversalSampling(TestSelections.TestSelection):
         self.cmp_arrays(pop, [self.one_individual[0] for _ in range(3)], self.el1_is_el2)
 
         pop = self.selection.run(self.two_individuals)
+        self.assertEqual(len(pop), self.number_of_parents)
         self.assertGreaterEqual(self.el_in_array(pop, self.two_individuals[0]), 1)
         self.assertGreaterEqual(self.el_in_array(pop, self.two_individuals[1]), 1)
 
         self.selection.number_of_parents = 10
         pop = self.selection.run(self.five_individuals)
+        self.assertEqual(len(pop), 10)
         self.assertGreaterEqual(self.el_in_array(pop, self.five_individuals[0]), 7)
