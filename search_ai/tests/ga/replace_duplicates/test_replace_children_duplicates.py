@@ -21,13 +21,8 @@ class TestReplaceChildrenDuplicatesWrapper(object):
         def test_replace_duplicates_with_randoms(self):
             with mock.patch('search_ai.ga.replace_duplicates.replace_children_duplicates.Search') as mock_search:
                 mock_search.sequencial_search.side_effect=[-1 for _ in range(self.l - self.diff)] + [i for i in range(self.diff)]
-                self.replace_duplicates.run(self.population, self.children)
+                self.replace_duplicates.run(population=self.population, children=self.children)
                 self.assertEqual(mock_search.sequencial_search.call_count, len(self.old_children))
-
-                # j = len(self.children) - len(self.new_children)
-                # for i in range(len(self.new_children)):
-                #     self.assertIs(self.new_children[i], self.children[j])
-                #     j += 1
 
                 for child in self.old_children:
                     mock_search.sequencial_search.assert_any_call(self.population, child, mock.ANY)

@@ -15,7 +15,9 @@ class TestReplaceChildrenDuplicatesWithRandoms(TestReplaceChildrenDuplicatesWrap
         self.replace_duplicates = ReplaceChildrenDuplicatesWithRandoms(self.fitness)
 
     def test_replace_children_duplicates_with_randoms_replace_child(self):
-        self.replace_duplicates.replace_child(self.population, self.children, 0)
+        self.replace_duplicates._population = self.population
+        self.replace_duplicates._children = self.children
+        self.replace_duplicates.replace_child(0)
 
         self.fitness.new_random_individual.assert_called_once_with()    
         self.fitness.run.assert_called_once_with(self.new_children[0])
