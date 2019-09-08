@@ -1,15 +1,16 @@
-from search_ai.ga.initialization.initialization_component import InitializationComponent
+from search_ai.ga.fitness_holder import FitnessHolder
 
 
-class Initialization(object):
+class Initialization(FitnessHolder):
 
     def __init__(
             self, u, fitness, init_population_size,
             init_components=tuple()
     ):
+        super(Initialization, self).__init__(fitness)
+
         self._init_population_size = init_population_size
         self.u = u
-        self.fitness = fitness
         self.init_population_size = init_population_size
         self.initialization_components = tuple(init_components)
 
@@ -52,14 +53,6 @@ class Initialization(object):
                              'attribute')
 
         self._init_population_size = new_value
-
-    @property
-    def fitness(self):
-        return self._fitness
-
-    @fitness.setter
-    def fitness(self, new_fitness):
-        self._fitness = new_fitness
 
     def run(self):
         population = []
