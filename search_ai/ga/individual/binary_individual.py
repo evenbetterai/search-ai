@@ -11,13 +11,8 @@ class BinaryIndividual(Individual):
     def __init__(self, len_features, randomize_features=True):
         super(BinaryIndividual, self).__init__(len_features, randomize_features)
 
-    def _init_features(self, len_features, randomize=False):
+    def _init_features_array(self, len_features):
         self._features = BitArray(len_features)
-
-        if randomize:
-            self._randomize_features()
-        else:
-            self._default_features()
 
     def _randomize_features(self):
         for i in range(len(self._features)):

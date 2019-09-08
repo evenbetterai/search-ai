@@ -32,13 +32,8 @@ class ContinuousIndividual(Individual):
 
         self._features[index] = value
 
-    def _init_features(self, len_features, randomize=False):
+    def _init_features_array(self, len_features):
         self._features = np.array([0] * len_features, np.double)
-
-        if randomize:
-            self._randomize_features()
-        else:
-            self._default_features()
 
     def _randomize_features(self):
         for i in range(len(self._features)):

@@ -72,8 +72,16 @@ class Individual(ABC):
     def set_feature_at(self, index, value):
         self._features[index] = value
 
-    @abstractmethod
     def _init_features(self, len_features, randomize=False):
+        self._init_features_array(len_features)
+
+        if randomize:
+            self._randomize_features()
+        else:
+            self._default_features()
+
+    @abstractmethod
+    def _init_features_array(self, len_features):
         pass
 
     @abstractmethod
