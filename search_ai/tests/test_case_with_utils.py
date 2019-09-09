@@ -17,3 +17,15 @@ class TestCaseWithUtils(unittest.TestCase):
                 count += 1
 
         return count
+
+
+    def check_simple_property(self, obj, prop_name, prop):
+        self.assertIs(getattr(obj, prop_name), prop)
+
+        new_prop = object()
+        setattr(obj, prop_name, new_prop)
+        self.assertIs(getattr(obj, prop_name), new_prop)
+
+        new_prop = None
+        setattr(obj, prop_name, new_prop)
+        self.assertIs(getattr(obj, prop_name), new_prop)

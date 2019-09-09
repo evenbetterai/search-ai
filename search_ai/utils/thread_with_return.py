@@ -8,7 +8,7 @@ class ThreadWithReturn(Thread):
         threads_list = []
 
         for i in range(n):
-            t = ThreadWithReturn(target=target_func, args=args_tup)
+            t = ThreadWithReturn(target=target_func, args=args_tup[i])
             threads_list.append(t)
             t.start()
 
