@@ -20,27 +20,29 @@ class GeneticAlgorithm(FitnessHolder):
     ):
         super(GeneticAlgorithm, self).__init__(fitness)
 
-        self._current_gen = 0
+        self._current_generation = 0
         self._population = None
         self.u = u # population size
         self.k = k # maximum lifetime
         self.h = h # produce h children
         self.p = p # number of parent that produce a child
-        self._replace_duplicates = replace_dups
-        self._elitism = elitism
-        self._initialization = init
-        self._selection = sel
-        self._recombination = rec
-        self._mutation = mut
-        self._recombination_times = self._l // self._recombination.num_of_children
-        self._recombination_times += 1 if self._l % self._recombination.num_of_children != 0 else 0
+        self.replace_duplicates = replace_dups
+        self.elitism = elitism
+        self.initialization = init
+        self.selection = sel
+        self.recombination = rec
+        self.mutation = mut
+        self._recombination_times = self.h // self._recombination.number_of_children
+        self._recombination_times += 1 if self.h % self._recombination.number_of_children != 0 else 0
 
         if stop_crit is None:
             self._stop_criteria = lambda ga: ga.current_generation >= 100
+        else:
+            self._stop_criteria = stop_crit
 
     @property
     def current_generation(self):
-        return self._current_gen
+        return self._current_generation
 
     @property
     def elitism(self):
@@ -76,11 +78,11 @@ class GeneticAlgorithm(FitnessHolder):
 
     @property
     def replace_duplicates(self):
-        return self._replace_dup
+        return self._replace_duplicates
 
     @replace_duplicates.setter
     def replace_duplicates(self, replace_duplicates):
-        self._replace_dup = replace_duplicates
+        self._replace_duplicates = replace_duplicates
 
     @property
     def selection(self):
@@ -133,18 +135,8 @@ class GeneticAlgorithm(FitnessHolder):
     def run(self):
         self._population = self._initialization.run()
 
-        while not self._stop_crit():
-            for _ in range(self._recombination_times):
-                self._childs = []
-                parents = self._selection.run(self._population)
-                self._childs += self._recombination.run(parents)
-
-            for child in self._childs:
-                self._mutation.run(child)
-                self._fitness.run(child)
-
-            self.update_population()
-            print(self._population[0])
+        while not self._stop_criteria(self):
+            self._main_cicle()
 
     @property
     def u(self):
@@ -158,17 +150,29 @@ class GeneticAlgorithm(FitnessHolder):
 
         self._u = u
 
+    def _main_cicle(self):
+        self._children = []
+
+        for _ in range(self._recombination_times):
+            parents = self._selection.run(self._population)
+            self._children += self._recombination.run(parents)
+
+        for child in self._children:
+            self._mutation.run(child)
+            self._fitness.run(child)
+
+        self.update_population()
+        print(self._population[0])
+
     def update_population(self):
-        self._current_gen += 1
-        self._replace_dup.run(self._population, self._childs)
-        self._population += self._childs
-        self._population.sort(key=lambda ind: ind.fitness)
+        self._current_generation += 1
+        self._replace_duplicates.run(self._population, self._children)
         self._elitism.run(self._population)
 
         for i in range(len(self._population) - 1, -1, -1):
             self._population[i].age += 1
 
-            if self._population[i].age > self._k:
+            if self._population[i].age >= self._k:
                 self._population.pop(i)
 
-        self._population = self._population[0:self._u]
+        self._population = sorted(self._population + self._children, reverse=True)[0:self.u]
